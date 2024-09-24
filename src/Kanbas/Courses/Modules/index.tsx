@@ -1,0 +1,52 @@
+import React from "react";
+
+export default function Modules() {
+    return (
+        <div>
+            <table border={0} width="100%">
+                <thead>
+                    <tr>
+                        <td>
+                            <button>Collapse All</button>
+                        </td>
+                        <td>
+                            <button>View Progress</button>
+                        </td>
+                        <td>
+                            <select>
+                                <option>Publish All</option>
+                                <option>Week 1</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button>+ Module</button>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+
+            <ul id="wd-modules">
+                <li className="wd-module">
+                    <div className="wd-title">Week 1</div>
+                    <ul className="wd-lessons">
+                        <li className="wd-lesson">
+                            <span className="wd-title">LEARNING OBJECTIVES</span>
+                            <ul className="wd-content">
+                                <li className="wd-content-item">Introduction to the course</li>
+                                <li className="wd-content-item">Learn what is Web Development</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li className="wd-module">
+                    <div className="wd-title">Week 2</div>
+                    <ul className="wd-lessons">
+                        <li className="wd-lesson">
+                            <span className="wd-title">LEARNING OBJECTIVES</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    );
+}

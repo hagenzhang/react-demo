@@ -7,9 +7,7 @@ export default function AccountNavigation() {
             <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_top">
                 Northeastern
             </a>
-
             <br />
-            
             <Link to="/Kanbas/Account" id="wd-account-link">Account</Link><br />
             <Link to="/Kanbas/Dashboard" id="wd-dashboard-link">Dashboard</Link><br />
             <Link to="/Kanbas/Dashboard" id="wd-course-link">Courses</Link><br />
