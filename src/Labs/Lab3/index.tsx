@@ -1,10 +1,9 @@
 import React from 'react';
 
-export default function Lab2() {
+export default function Lab3() {
     return (
         <div>
-            <h2>Lab 2</h2>
+            <h2>Lab 3</h2>
         </div>
     );
 }
-
