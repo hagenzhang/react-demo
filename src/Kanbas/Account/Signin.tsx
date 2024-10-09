@@ -6,20 +6,12 @@ export default function Signin() {
     return (
         <div id="wd-signin-screen" className="m-3">
             <h3>Sign in</h3>
-            <input id="wd-username"
-                placeholder="username"
-                className="form-control mb-2" />
-            <input id="wd-password"
-                placeholder="password"
-                type="password"
-                className="form-control mb-2" />
-            <Link id="wd-signin-btn"
-                to="/Kanbas/Dashboard"
-                className="btn btn-primary w-100">
+            <input id="wd-username" placeholder="username" className="form-control mb-2"/> 
+            <input id="wd-password" placeholder="password" type="password" className="form-control mb-2"/>
+            <Link id="wd-signin-btn" to="/Kanbas/Dashboard" className="btn btn-primary w-100">
                 Sign in
             </Link>
-            <Link id="wd-signup-link"
-                to="/Kanbas/Account/Profile">
+            <Link id="wd-signup-link" to="/Kanbas/Account/Profile">
                 Sign up
             </Link>
         </div>

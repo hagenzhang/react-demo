@@ -7,7 +7,7 @@ export default function AssignmentsControls() {
         <span className="input-group-text">
           <FaMagnifyingGlass />
         </span>
-        <input type="text" className="form-control"/>
+        <input type="text" placeholder="Search..." className="form-control"/>
       </div>
 
       <button
