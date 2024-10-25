@@ -1,18 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 export default function CoursesNavigation() {
+    const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
+    const { pathname } = useLocation();
+
     return (
-        <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0 nav nav-tabs">
-            <Link id="wd-course-home-link" to="/Kanbas/Courses/1234/Home" className="nav-item list-group-item active border border-0">Home</Link>
-            <Link id="wd-course-modules-link" to="/Kanbas/Courses/1234/Modules" className="nav-item list-group-item text-danger border border-0">Modules</Link>
-            <Link id="wd-course-piazza-link" to="/Kanbas/Courses/1234/Piazza" className="list-group-item text-danger border border-0">Piazza</Link>
-            <Link id="wd-course-zoom-link" to="/Kanbas/Courses/1234/Zoom" className="list-group-item text-danger border border-0">Zoom</Link>
-            <Link id="wd-course-quizzes-link" to="/Kanbas/Courses/1234/Assignments" className="list-group-item text-danger border border-0">Assignments</Link>
-            <Link id="wd-course-assignments-link" to="/Kanbas/Courses/1234/Quizzes" className="list-group-item text-danger border border-0">Quizzes</Link>
-            <Link id="wd-course-grades-link" to="/Kanbas/Courses/1234/Grades" className="list-group-item border text-danger border-0">Grades</Link>
-            <Link id="wd-course-people-link" to="/Kanbas/Courses/1234/People" className="list-group-item border text-danger border-0">People</Link>
+        <div id="wd-courses-navigation" className="wd list-group fs-5 nav nav-tabs">
+            {links.map((link) => (
+                <Link
+                    id={`wd-course-${link.toLowerCase()}-link`}
+                    key={link}
+                    to={link}
+                    className={`nav-item list-group-item bg-white border-0
+                        ${pathname.includes(link) ? "text-black" : "text-danger"}`}>
+                        {/* I couldn't get the left border stuff to work so I left it at this */}
+                    {link}
+                </Link>
+            ))}
         </div>
     );
 }
