@@ -1,22 +1,26 @@
 import React from 'react';
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import * as db from "../../Database";
 
 
+
 export default function AssignmentEditor() {
-    const { cid } = useParams();
+    const { pathname } = useLocation();
     const assignments = db.assignments
-    // TODO: finish the editor screen
+
+    const assignmentID = pathname.split("/").pop()
+    const assignment = assignments.find(obj => obj._id === assignmentID)
+
     return (
         <div id="wd-assignments-editor">
 
             <form className="p-4">
                 <div className="form-group row mb-3">
                     <label htmlFor="wd-name" className="col-md-3 col-form-label text-md-end">
-                        Assignment Name
+                        Name
                     </label>
                     <div className="col-md-9">
-                        <input id="wd-name" className="form-control" defaultValue="A1" />
+                        <input id="wd-name" className="form-control" defaultValue={assignment?.title} />
                     </div>
                 </div>
 
@@ -26,7 +30,7 @@ export default function AssignmentEditor() {
                     </label>
                     <div className="col-md-9">
                         <textarea id="wd-description" className="form-control" rows={6}>
-                            The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: your full name and section, links to the Kanbas application, and links to all relevant source code repositories. The Kanbas application should include a link to navigate back to the landing page.
+                            placeholder for the description, but we would get it via : "assignment?.description"
                         </textarea>
                     </div>
                 </div>
@@ -36,7 +40,7 @@ export default function AssignmentEditor() {
                         Points
                     </label>
                     <div className="col-md-9">
-                        <input id="wd-points" className="form-control" defaultValue={100} />
+                        <input id="wd-points" className="form-control" defaultValue={assignment?.points} />
                     </div>
                 </div>
 
