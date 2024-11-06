@@ -15,15 +15,21 @@ export default function Modules() {
     const { modules } = useSelector((state: any) => state.modulesReducer);
     const dispatch = useDispatch();
 
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+
     return (
         <div>
-            <ModulesControls
-                setModuleName={setModuleName}
-                moduleName={moduleName}
-                addModule={() => {
-                    dispatch(addModule({ name: moduleName, course: cid }));
-                    setModuleName("");
-                }} />
+
+            {currentUser.role === "FACULTY" && (
+                <ModulesControls
+                    setModuleName={setModuleName}
+                    moduleName={moduleName}
+                    addModule={() => {
+                        dispatch(addModule({ name: moduleName, course: cid }));
+                        setModuleName("");
+                    }}
+                />
+            )}
             <br />
             <br />
             <br />
@@ -47,12 +53,15 @@ export default function Modules() {
                                         }}
                                         defaultValue={module.name} />
                                 )}
-                                <ModuleControlButtons
-                                    moduleId={module._id}
-                                    deleteModule={(moduleId) => {
-                                        dispatch(deleteModule(moduleId));
-                                    }}
-                                    editModule={(moduleId) => dispatch(editModule(moduleId))} />
+
+                                {currentUser.role === "FACULTY" && (
+                                    <ModuleControlButtons
+                                        moduleId={module._id}
+                                        deleteModule={(moduleId) => {
+                                            dispatch(deleteModule(moduleId));
+                                        }}
+                                        editModule={(moduleId) => dispatch(editModule(moduleId))} />
+                                )}
                             </div>
 
                             {module.lessons && (
