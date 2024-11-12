@@ -1,7 +1,8 @@
 import { FaMagnifyingGlass, FaPlus } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 
-export default function AssignmentsControls() {
+export default function AssignmentsControls({ assignmentName, setAssignmentName, addAssignment }:
+    { assignmentName: string; setAssignmentName: (title: string) => void; addAssignment: () => void; }) {
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 

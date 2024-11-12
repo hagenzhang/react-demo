@@ -7,34 +7,33 @@ import { useParams } from "react-router";
 import { addModule, editModule, updateModule, deleteModule }
     from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
-import * as db from "../../Database";
 
 export default function Modules() {
     const { cid } = useParams();
     const [moduleName, setModuleName] = useState("");
     const { modules } = useSelector((state: any) => state.modulesReducer);
     const dispatch = useDispatch();
-
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     return (
         <div>
 
             {currentUser.role === "FACULTY" && (
-                <ModulesControls
-                    setModuleName={setModuleName}
-                    moduleName={moduleName}
-                    addModule={() => {
-                        dispatch(addModule({ name: moduleName, course: cid }));
-                        setModuleName("");
-                    }}
-                />
+                <>
+                    <ModulesControls
+                        setModuleName={setModuleName}
+                        moduleName={moduleName}
+                        addModule={() => {
+                            dispatch(addModule({ name: moduleName, course: cid }));
+                            setModuleName("");
+                        }}
+                    />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-
             <ul id="wd-modules" className="list-group rounded-0">
                 {modules
                     .filter((module: any) => module.course === cid)

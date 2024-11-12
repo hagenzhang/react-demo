@@ -1,22 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AssignmentsControls from './AssignmentsControls';
 import { BsGripVertical, BsPencilSquare } from 'react-icons/bs';
 import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
-import * as db from "../../Database";
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Assignments() {
-    const { cid } = useParams();
-    const assignments = db.assignments
-    
+    const { aid } = useParams();
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const [assignmentName, setAssignmentName] = useState("");
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+
     return (
+
         <div id="wd-assignments">
-            <AssignmentsControls />
-            <br />
-            <br />
-            <br />
-            <br />
+            {currentUser.role === "FACULTY" && (
+                <>
+                <AssignmentsControls
+                    assignmentName={assignmentName}
+                    setAssignmentName={setAssignmentName}
+                    addAssignment={() => {
+                        dispatch(assignments({ name: assignmentName, id: aid }));
+                        setAssignmentName("");
+                    }}
+                />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </>
+            )}
 
             <div className="wd-title p-3 ps-2 bg-secondary">
                 <BsGripVertical className="me-2 fs-3" />
@@ -26,7 +41,7 @@ export default function Assignments() {
 
             <ul id="wd-assignment-list" className="list-group rounded-0">
                 {assignments
-                    .filter((assign: any) => assign.course === cid)
+                    .filter((assign: any) => assign.course === aid)
                     .map((assign: any) => (
                         <li className="wd-assignment-list-item d-flex align-items-center list-group-item p-3 ps-1">
                             <BsGripVertical className="me-2 fs-3" />
@@ -39,9 +54,9 @@ export default function Assignments() {
                                 </a>
                                 <br />
                                 <span style={{ color: "crimson" }}> Multiple Modules </span>
-                                | <b> Not available until: </b> 
+                                | <b> Not available until: </b>
                                 {`${assign.release_date} at ${assign.release_time}`} | <br />
-                                <b>Due</b> {`${assign.due_date}, ${assign.due_time}`} | 
+                                <b>Due</b> {`${assign.due_date}, ${assign.due_time}`} |
                                 {`${assign.points} points`}
                             </div>
 
