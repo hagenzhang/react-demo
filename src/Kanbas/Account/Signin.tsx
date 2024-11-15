@@ -17,6 +17,7 @@ export default function Signin() {
         dispatch(setCurrentUser(user));
         navigate("/Kanbas/Dashboard");
     };
+    const signup = () => {navigate("/Kanbas/Account/Signup")};
 
     return (
         <div id="wd-signin-screen" className="m-3">
@@ -30,13 +31,13 @@ export default function Signin() {
                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
 
 
-            <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100">
+            <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100 mb-1">
                 Sign in
             </button>
-            
-            <Link id="wd-signup-link" to="/Kanbas/Account/Profile">
-                Sign up
-            </Link>
+
+            <button onClick={signup} id="wd-signup-btn" className="btn btn-primary w-100 mt-1">
+                Sign Up
+            </button>
         </div>
     );
 }

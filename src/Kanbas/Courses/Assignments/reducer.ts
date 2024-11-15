@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { assignments } from "../../Database";
+
 const initialState = {
     assignments: assignments,
 };
-
 const assignmentSlice = createSlice({
     name: "assignments",
     initialState,
     reducers: {
-        addAssign: (state, { payload: assignment }) => {
+        addAssign: (state, { payload: assignment }) => { 
             let maxNumber = -1
             
             assignments.forEach(a => {
@@ -17,7 +17,7 @@ const assignmentSlice = createSlice({
                     maxNumber = number;
                 }
             });
-        
+
             const newAssignment: any = {
                 _id: `A${maxNumber + 1}`,
                 title: assignment.title,
@@ -46,6 +46,7 @@ const assignmentSlice = createSlice({
         },
     },
 });
-export const { addAssign, deleteAssign, updateAssign, editAssign } =
+
+export const { addAssign, } = //deleteAssign, updateAssign, editAssign } =
     assignmentSlice.actions;
 export default assignmentSlice.reducer;

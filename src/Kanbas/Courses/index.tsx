@@ -5,7 +5,7 @@ import CoursesNavigation from './Navigation';
 import Modules from './Modules';
 import Home from './Home';
 import Assignments from './Assignments';
-import AssignmentEditor from './Assignments/Editor';
+import AssignmentEditor from './Assignments/AssignmentEditor';
 import { Route, Routes, useParams, useLocation } from 'react-router';
 import { FaAlignJustify } from 'react-icons/fa';
 import PeopleTable from './People/Table';

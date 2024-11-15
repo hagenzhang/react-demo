@@ -5,27 +5,20 @@ import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
+import { addAssign } from "./reducer";
 
 export default function Assignments() {
-    const { aid } = useParams();
-    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const { cid } = useParams();
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const [assignmentName, setAssignmentName] = useState("");
     const dispatch = useDispatch();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     return (
-
         <div id="wd-assignments">
             {currentUser.role === "FACULTY" && (
                 <>
-                <AssignmentsControls
-                    assignmentName={assignmentName}
-                    setAssignmentName={setAssignmentName}
-                    addAssignment={() => {
-                        dispatch(assignments({ name: assignmentName, id: aid }));
-                        setAssignmentName("");
-                    }}
-                />
+                    <AssignmentsControls />
                     <br />
                     <br />
                     <br />
@@ -41,7 +34,7 @@ export default function Assignments() {
 
             <ul id="wd-assignment-list" className="list-group rounded-0">
                 {assignments
-                    .filter((assign: any) => assign.course === aid)
+                    .filter((assign: any) => assign.course === cid)
                     .map((assign: any) => (
                         <li className="wd-assignment-list-item d-flex align-items-center list-group-item p-3 ps-1">
                             <BsGripVertical className="me-2 fs-3" />

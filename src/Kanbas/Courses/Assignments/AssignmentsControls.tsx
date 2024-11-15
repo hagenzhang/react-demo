@@ -1,10 +1,7 @@
 import { FaMagnifyingGlass, FaPlus } from 'react-icons/fa6';
-import { useSelector } from 'react-redux';
+import AssignmentEditor from './AssignmentEditor'
 
-export default function AssignmentsControls({ assignmentName, setAssignmentName, addAssignment }:
-    { assignmentName: string; setAssignmentName: (title: string) => void; addAssignment: () => void; }) {
-
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
+export default function AssignmentsControls() {
 
     return (
         <div id="wd-assignments-controls" className="text-nowrap">
@@ -15,21 +12,19 @@ export default function AssignmentsControls({ assignmentName, setAssignmentName,
                 <input type="text" placeholder="Search..." className="form-control" />
             </div>
 
-            {currentUser.role === "FACULTY" && (
-                <>
-                    <button
-                        id="wd-add-assignment-btn"
-                        className="btn btn-lg btn-danger me-1 float-end">
-                        <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                        Assignment
-                    </button><button
-                        id="wd-add-group-btn"
-                        className="btn btn-lg btn-secondary me-1 float-end">
-                        <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                        Group
-                    </button>
-                </>
-            )}
+            <button
+                id="wd-add-assignment-btn"
+                className="btn btn-lg btn-danger me-1 float-end">
+                <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
+                Assignment
+            </button>
+
+            <button
+                id="wd-add-group-btn"
+                className="btn btn-lg btn-secondary me-1 float-end">
+                <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
+                Group
+            </button>
         </div>
     );
 }

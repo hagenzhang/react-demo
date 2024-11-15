@@ -2,8 +2,6 @@ import React from 'react';
 import { useLocation } from "react-router";
 import * as db from "../../Database";
 
-
-
 export default function AssignmentEditor() {
     const { pathname } = useLocation();
     const assignments = db.assignments
@@ -13,7 +11,6 @@ export default function AssignmentEditor() {
 
     return (
         <div id="wd-assignments-editor">
-
             <form className="p-4">
                 <div className="form-group row mb-3">
                     <label htmlFor="wd-name" className="col-md-3 col-form-label text-md-end">
