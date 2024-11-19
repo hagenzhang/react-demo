@@ -47,6 +47,6 @@ const assignmentSlice = createSlice({
     },
 });
 
-export const { addAssign, } = //deleteAssign, updateAssign, editAssign } =
+export const { addAssign, deleteAssign, updateAssign, editAssign } =
     assignmentSlice.actions;
 export default assignmentSlice.reducer;

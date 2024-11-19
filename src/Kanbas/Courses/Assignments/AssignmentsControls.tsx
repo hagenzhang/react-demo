@@ -1,5 +1,6 @@
 import { FaMagnifyingGlass, FaPlus } from 'react-icons/fa6';
 import AssignmentEditor from './AssignmentEditor'
+import { Link } from 'react-router-dom';
 
 export default function AssignmentsControls() {
 
@@ -12,19 +13,26 @@ export default function AssignmentsControls() {
                 <input type="text" placeholder="Search..." className="form-control" />
             </div>
 
-            <button
-                id="wd-add-assignment-btn"
-                className="btn btn-lg btn-danger me-1 float-end">
-                <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                Assignment
-            </button>
+            <div className="wd-button float-end">
+                <Link to={"../Assignments/Editor"} 
+                    id="wd-add-assignment-btn"
+                    className="btn btn-lg btn-danger me-1 float-end"
+                    role="button"
+                >
+                    <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
+                    Assignment
+                </Link>
+            </div>
 
-            <button
-                id="wd-add-group-btn"
-                className="btn btn-lg btn-secondary me-1 float-end">
-                <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                Group
-            </button>
+            <div className="wd-button float-end">
+                <Link to='#'
+                    id="wd-add-group-btn"
+                    className="btn btn-lg btn-secondary me-1 float-end"
+                >
+                    <FaPlus className="position-relative me-2" style={{ bottom: '1px' }}/>
+                    Group
+                </Link>{' '}
+            </div>
         </div>
     );
 }

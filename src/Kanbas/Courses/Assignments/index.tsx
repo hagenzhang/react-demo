@@ -5,7 +5,7 @@ import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
-import { addAssign } from "./reducer";
+import { deleteAssign } from "./reducer"
 
 export default function Assignments() {
     const { cid } = useParams();
@@ -53,7 +53,11 @@ export default function Assignments() {
                                 {`${assign.points} points`}
                             </div>
 
-                            <AssignmentControlButtons />
+                            <AssignmentControlButtons
+                                assignmentID={assign._id}
+                                deleteAssignment={(assignmentID) => {
+                                    dispatch(deleteAssign(assignmentID));
+                                }} />
                         </li>)
                     )
                 }
