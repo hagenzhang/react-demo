@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { courses } from "../Database";
 import CoursesNavigation from './Navigation';
 import Modules from './Modules';
 import Home from './Home';

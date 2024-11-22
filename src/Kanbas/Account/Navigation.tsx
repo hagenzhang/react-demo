@@ -7,7 +7,10 @@ export default function AccountNavigation() {
     const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
     const { pathname } = useLocation();
 
-    {/* TODO Were we supposed to do something with this change? Not shown in HW */}
+    console.log(pathname)
+    console.log(links)
+
+    // TODO Were we supposed to do something with this change? Not shown in HW
 
     return (
         <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
