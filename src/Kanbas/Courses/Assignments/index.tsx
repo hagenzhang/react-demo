@@ -1,6 +1,6 @@
 import React from 'react';
 import AssignmentsControls from './AssignmentsControls';
-import { BsGripVertical, BsPencilSquare } from 'react-icons/bs';
+import { BsGripVertical } from 'react-icons/bs';
 import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
@@ -37,7 +37,6 @@ export default function Assignments() {
                     .map((assign: any) => (
                         <li className="wd-assignment-list-item d-flex align-items-center list-group-item p-3 ps-1">
                             <BsGripVertical className="me-2 fs-3" />
-                            <BsPencilSquare className="text-success me-1 fs-5" />
 
                             <div className="wd-assignment-info ps-3">
                                 <a className="wd-assignment-link text-decoration-none"
@@ -52,11 +51,13 @@ export default function Assignments() {
                                 {` ${assign.points} points`}
                             </div>
 
-                            <AssignmentControlButtons
-                                assignmentID={assign._id}
-                                deleteAssignment={(assignmentID) => {
-                                    dispatch(deleteAssign(assignmentID));
-                                }} />
+                            {currentUser.role === "FACULTY" && (
+                                <AssignmentControlButtons
+                                    assignmentID={assign._id}
+                                    deleteAssignment={(assignmentID) => {
+                                        dispatch(deleteAssign(assignmentID));
+                                    }} />
+                            )}
                         </li>)
                     )
                 }

@@ -89,43 +89,43 @@ export default function AssignmentEditor() {
 
                     <div className="col-md-9">
                         <div className="px-2 border border-gray rounded">
-                        <div className="form-group row mb-2 w-auto">
-                            <label htmlFor="wd-due-date" className="col col-form-label">
-                                Due Date
-                            </label>
-                            <div>
-                                <input type="datetime-local"
-                                    id="wd-due-date"
-                                    className="form-control"
-                                    defaultValue={due}
-                                    onChange={(e) => setDue(e.target.value)} />
-                            </div>
-                            
-                        </div>
+                            <div className="form-group row mb-2 w-auto">
+                                <label htmlFor="wd-due-date" className="col col-form-label">
+                                    Due Date
+                                </label>
+                                <div>
+                                    <input type="datetime-local"
+                                        id="wd-due-date"
+                                        className="form-control"
+                                        defaultValue={due}
+                                        onChange={(e) => setDue(e.target.value)} />
+                                </div>
 
-                        <div className="form-group row mb-3">
-                            <label htmlFor="wd-available-from" className="col-md-auto col-form-label">
-                                Available From
-                            </label>
-                            <div className="col-md-auto">
-                                <input type="datetime-local"
-                                    id="wd-available-from"
-                                    className="form-control"
-                                    defaultValue={release}
-                                    onChange={(e) => setRelease(e.target.value)}/>
                             </div>
 
-                            <label htmlFor="wd-available-until" className="col-md-auto col-form-label">
-                                Until
-                            </label>
-                            <div className="col-md-auto">
-                                <input type="datetime-local"
-                                    id="wd-available-until"
-                                    className="form-control"
-                                    defaultValue={close}
-                                    onChange={(e) => setClose(e.target.value)}/>
+                            <div className="form-group row mb-3">
+                                <label htmlFor="wd-available-from" className="col-md-auto col-form-label">
+                                    Available From
+                                </label>
+                                <div className="col-md-auto">
+                                    <input type="datetime-local"
+                                        id="wd-available-from"
+                                        className="form-control"
+                                        defaultValue={release}
+                                        onChange={(e) => setRelease(e.target.value)} />
+                                </div>
+
+                                <label htmlFor="wd-available-until" className="col-md-auto col-form-label">
+                                    Until
+                                </label>
+                                <div className="col-md-auto">
+                                    <input type="datetime-local"
+                                        id="wd-available-until"
+                                        className="form-control"
+                                        defaultValue={close}
+                                        onChange={(e) => setClose(e.target.value)} />
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ export default function AssignmentEditor() {
                         <Link to={`/Kanbas/Courses/${classID}/Assignments`}
                             className="btn btn-danger"
                             style={{ marginLeft: "5px" }}
-                            onClick={() => {handleSave()}}>
+                            onClick={() => { handleSave() }}>
                             Save
                         </Link>
                     </div>

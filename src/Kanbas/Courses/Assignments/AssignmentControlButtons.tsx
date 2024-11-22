@@ -1,10 +1,7 @@
 import { IoEllipsisVertical } from "react-icons/io5";
 
-import { useDispatch, useSelector } from 'react-redux';
 import GreenCheckmark from "../Modules/GreenCheckmark";
-import { useParams } from "react-router";
 import { FaTrash } from "react-icons/fa";
-
 
 export default function AssignmentControlButtons({ assignmentID, deleteAssignment }: {
     assignmentID: string;
