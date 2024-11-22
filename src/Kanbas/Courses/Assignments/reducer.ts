@@ -8,24 +8,24 @@ const assignmentSlice = createSlice({
     name: "assignments",
     initialState,
     reducers: {
-        addAssign: (state, { payload: assignment }) => { 
-            let maxNumber = -1
-            
-            assignments.forEach(a => {
-                const number = parseInt(a._id.match(/\d+$/)![0]);
-                if (number > maxNumber) {
-                    maxNumber = number;
+        addAssign: (state, { payload: assignment }) => {
+            const ids = assignments.map(assignment => parseInt(assignment._id.substring(1)));
+            let newIDValue = state.assignments.length + 1;
+
+            ids.sort((a, b) => a - b);
+            for (let i = 0; i <= ids.length; i++) {
+                if (i !== ids[i]) {
+                    newIDValue = i;
                 }
-            });
+            }
 
             const newAssignment: any = {
-                _id: `A${maxNumber + 1}`,
+                _id: `A${newIDValue}`,
                 title: assignment.title,
-                course: assignment.name,
-                release_date: assignment.course,
-                release_time: assignment.release_time, 
-                due_date: assignment.release_date,
-                due_time: assignment.due_time,
+                course: assignment.course,
+                release: assignment.release,
+                close: assignment.close,
+                due: assignment.due,
                 points: assignment.points,
             };
             state.assignments = [...state.assignments, newAssignment] as any;
@@ -47,6 +47,5 @@ const assignmentSlice = createSlice({
     },
 });
 
-export const { addAssign, deleteAssign, updateAssign, editAssign } =
-    assignmentSlice.actions;
+export const { addAssign, deleteAssign, updateAssign, editAssign } = assignmentSlice.actions;
 export default assignmentSlice.reducer;

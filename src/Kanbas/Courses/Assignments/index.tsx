@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AssignmentsControls from './AssignmentsControls';
 import { BsGripVertical, BsPencilSquare } from 'react-icons/bs';
 import AssignmentsControlButtons from './AssignmentsControlButtons';
@@ -10,7 +10,6 @@ import { deleteAssign } from "./reducer"
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentReducer);
-    const [assignmentName, setAssignmentName] = useState("");
     const dispatch = useDispatch();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -48,9 +47,9 @@ export default function Assignments() {
                                 <br />
                                 <span style={{ color: "crimson" }}> Multiple Modules </span>
                                 | <b> Not available until: </b>
-                                {`${assign.release_date} at ${assign.release_time}`} | <br />
-                                <b>Due</b> {`${assign.due_date}, ${assign.due_time}`} |
-                                {`${assign.points} points`}
+                                {`${assign.release}`} <br />
+                                <b>Due</b> {`${assign.due}`} |
+                                {` ${assign.points} points`}
                             </div>
 
                             <AssignmentControlButtons

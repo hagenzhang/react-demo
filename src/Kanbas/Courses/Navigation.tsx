@@ -15,7 +15,6 @@ export default function CoursesNavigation() {
                     to={link}
                     className={`nav-item list-group-item bg-white border-0
                         ${pathname.includes(link) ? "text-black" : "text-danger"}`}>
-                        {/* I couldn't get the left border stuff to work so I left it at this */}
                     {link}
                 </Link>
             ))}
