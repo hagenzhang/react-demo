@@ -40,66 +40,7 @@ export default function AssignmentEditor() {
                         <input id="wd-points" className="form-control" defaultValue={assignment?.points} />
                     </div>
                 </div>
-
-                <div className="form-group row mb-3">
-                    <label htmlFor="wd-group" className="col-md-3 col-form-label text-md-end">
-                        Assignment Group
-                    </label>
-                    <div className="col-md-9 position-relative">
-                        <select id="wd-group" className="form-select">
-                            <option value="assignments">ASSIGNMENTS</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="form-group row mb-3">
-                    <label htmlFor="wd-display-grade-as" className="col-md-3 col-form-label text-md-end">
-                        Display Grade As
-                    </label>
-                    <div className="col-md-9 position-relative">
-                        <select id="wd-display-grade-as" className="form-select">
-                            <option value="percent">Percentage</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="form-group row mb-3">
-                    <label className="col-md-3 col-form-label text-md-end">
-                        Online Entry Options
-                    </label>
-                    <div className="col-md-9 border border-gray rounded">
-                        <label htmlFor="wd-submission-type" className="col-md-3 col-form-label">
-                            Submission Type
-                        </label>
-                        <div className="col-md-9 position-relative">
-                            <select id="wd-submission-type" className="form-select">
-                                <option value="online">Online</option>
-                            </select>
-                        </div>
-
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="wd-text-entry" />
-                            <label className="form-check-label" htmlFor="wd-text-entry">Text Entry</label>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="wd-website-url" defaultChecked />
-                            <label className="form-check-label" htmlFor="wd-website-url">Website URL</label>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="wd-media-recordings" />
-                            <label className="form-check-label" htmlFor="wd-media-recordings">Media Recordings</label>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="wd-student-annotation" />
-                            <label className="form-check-label" htmlFor="wd-student-annotation">Student Annotation</label>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="wd-file-upload" />
-                            <label className="form-check-label" htmlFor="wd-file-upload">File Uploads</label>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <div className="form-group row mb-3">
                     <label htmlFor="wd-assign-to" className="col-md-3 col-form-label text-md-end">
                         Assign

@@ -2,6 +2,7 @@
     {
         "_id": "A101",
         "title": "Propulsion Assignment",
+        "description": "Propulsion description",
         "course": "RS101",
         "release_date": "yy/yy/yyyy",
         "release_time": "yy:yy am/pm",
