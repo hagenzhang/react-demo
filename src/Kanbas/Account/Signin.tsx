@@ -3,21 +3,22 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
 import { useDispatch } from "react-redux";
-import * as db from "../Database";
+
+import * as client from "./client";
 
 
 export default function Signin() {
     const [credentials, setCredentials] = useState<any>({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const signin = () => {
-        const user = db.users.find(
-            (u: any) => u.username === credentials.username && u.password === credentials.password);
+    const signin = async () => {
+        const user = await client.signin(credentials);
         if (!user) return;
         dispatch(setCurrentUser(user));
         navigate("/Kanbas/Dashboard");
     };
-    const signup = () => {navigate("/Kanbas/Account/Signup")};
+
+    const signup = () => { navigate("/Kanbas/Account/Signup") };
 
     return (
         <div id="wd-signin-screen" className="m-3">
@@ -29,7 +30,6 @@ export default function Signin() {
             <input id="wd-password" placeholder="password" type="password" className="form-control mb-2"
                 defaultValue={credentials.password}
                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
-
 
             <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100 mb-1">
                 Sign in
