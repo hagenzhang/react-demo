@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as db from "./Database";
 
 
 export default function Dashboard(
@@ -13,7 +12,6 @@ export default function Dashboard(
         }) {
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = db;
 
     return (
         <div id="wd-dashboard">
@@ -53,51 +51,46 @@ export default function Dashboard(
 
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {courses.filter((course) =>
-                        enrollments.some(
-                            (enrollment) =>
-                                enrollment.user === currentUser._id &&
-                                enrollment.course === course._id
-                        ))
-                        .map((course) => (
-                            <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-                                <div className="card rounded-3 overflow-hidden">
+                    {courses.map((course) => (
+                        <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+                            <div className="card rounded-3 overflow-hidden">
 
-                                    <Link to={`/Kanbas/Courses/${course._id}/Home`}
-                                        className="wd-dashboard-course-link text-decoration-none text-dark" >
+                                <Link to={`/Kanbas/Courses/${course._id}/Home`}
+                                    className="wd-dashboard-course-link text-decoration-none text-dark" >
 
-                                        {/* TODO: Maybe configure images here later? We could add in a folder for it */}
-                                        <img src="/images/reactjs.jpg" width="100%" height={160} alt='course' />
+                                    {/* TODO: Maybe configure images here later? We could add in a folder for it 
+                                    <img src="/images/reactjs.jpg" width="100%" height={160} alt='course' />
+                                    */}
+                                    
+                                    <div className="card-body">
+                                        <h5 className="wd-dashboard-course-title card-title">
+                                            {course.name} </h5>
+                                        <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
+                                            {course.description} </p>
+                                        <button className="btn btn-primary"> Go </button>
 
-                                        <div className="card-body">
-                                            <h5 className="wd-dashboard-course-title card-title">
-                                                {course.name} </h5>
-                                            <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
-                                                {course.description} </p>
-                                            <button className="btn btn-primary"> Go </button>
-
-                                            {currentUser.role === "FACULTY" && (
-                                                <><button id="wd-edit-course-click"
-                                                    onClick={(event) => {
-                                                        event.preventDefault();
-                                                        setCourse(course);
-                                                    }}
-                                                    className="btn btn-warning me-2 float-end">
-                                                    Edit
-                                                </button><button onClick={(event) => {
+                                        {currentUser.role === "FACULTY" && (
+                                            <><button id="wd-edit-course-click"
+                                                onClick={(event) => {
                                                     event.preventDefault();
-                                                    deleteCourse(course._id);
-                                                }} className="btn btn-danger float-end"
-                                                    id="wd-delete-course-click">
-                                                        Delete
-                                                    </button>
-                                                </>
-                                            )}
-                                        </div>
-                                    </Link>
-                                </div>
+                                                    setCourse(course);
+                                                }}
+                                                className="btn btn-warning me-2 float-end">
+                                                Edit
+                                            </button><button onClick={(event) => {
+                                                event.preventDefault();
+                                                deleteCourse(course._id);
+                                            }} className="btn btn-danger float-end"
+                                                id="wd-delete-course-click">
+                                                    Delete
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+                                </Link>
                             </div>
-                        ))}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>);
