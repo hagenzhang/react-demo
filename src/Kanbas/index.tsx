@@ -6,9 +6,8 @@ import Dashboard from './Dashboard';
 import KanbasNavigation from './Navigation';
 import Courses from './Courses';
 import ProtectedRoute from "./Account/ProtectedRoute";
-
-
 import Session from "./Account/Session";
+
 import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
 import { useSelector } from "react-redux";
