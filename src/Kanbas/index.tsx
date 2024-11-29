@@ -1,6 +1,7 @@
+import "./styles.css";
+
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from 'react-router';
-import "./styles.css";
 import Account from './Account';
 import Dashboard from './Dashboard';
 import KanbasNavigation from './Navigation';
@@ -39,6 +40,8 @@ export default function Kanbas() {
     const deleteCourse = async (courseId: string) => {
         const status = await courseClient.deleteCourse(courseId);
         setCourses(courses.filter((course) => course._id !== courseId));
+
+        console.log('Delete Course Status:', status)
     };
     const updateCourse = async () => {
         await courseClient.updateCourse(course);
