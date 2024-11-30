@@ -54,14 +54,8 @@ export default function Dashboard(
                     {courses.map((course) => (
                         <div className="wd-dashboard-course col" style={{ width: "300px" }}>
                             <div className="card rounded-3 overflow-hidden">
-
                                 <Link to={`/Kanbas/Courses/${course._id}/Home`}
                                     className="wd-dashboard-course-link text-decoration-none text-dark" >
-
-                                    {/* TODO: Maybe configure images here later? We could add in a folder for it 
-                                    <img src="/images/reactjs.jpg" width="100%" height={160} alt='course' />
-                                    */}
-                                    
                                     <div className="card-body">
                                         <h5 className="wd-dashboard-course-title card-title">
                                             {course.name} </h5>
