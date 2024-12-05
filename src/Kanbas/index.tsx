@@ -29,7 +29,7 @@ export default function Kanbas() {
             console.error("Find Courses For User", error);
         }
     };
-    
+
     const updateEnrollment = async (courseId: string, enrolled: boolean) => {
         if (enrolled) {
             await userClient.enrollIntoCourse(currentUser._id, courseId);
@@ -46,6 +46,7 @@ export default function Kanbas() {
             })
         );
     };
+
     const fetchCourses = async () => {
         try {
             const allCourses = await courseClient.fetchAllCourses();
@@ -101,34 +102,32 @@ export default function Kanbas() {
     };
 
     return (
-        <Session>
-            <div id="wd-kanbas">
-                <KanbasNavigation />
-                <div className="wd-main-content-offset p-3">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="Dashboard" />} />
-                        <Route path="Account/*" element={<Account />} />
-                        <Route path="Dashboard" element={
-                            <ProtectedRoute>
-                                <Dashboard
-                                    courses={courses}
-                                    course={course}
-                                    setCourse={setCourse}
-                                    addNewCourse={addNewCourse}
-                                    deleteCourse={deleteCourse}
-                                    updateCourse={updateCourse}
-                                    enrolling={enrolling}
-                                    setEnrolling={setEnrolling}
-                                    updateEnrollment={updateEnrollment} />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="Courses/:cid/*" element={
-                            <ProtectedRoute>
-                                <Courses courses={courses} />
-                            </ProtectedRoute>} />
-                    </Routes>
-                </div>
+        <div id="wd-kanbas">
+            <KanbasNavigation />
+            <div className="wd-main-content-offset p-3">
+                <Routes>
+                    <Route path="/" element={<Navigate to="Dashboard" />} />
+                    <Route path="Account/*" element={<Account />} />
+                    <Route path="Dashboard" element={
+                        <ProtectedRoute>
+                            <Dashboard
+                                courses={courses}
+                                course={course}
+                                setCourse={setCourse}
+                                addNewCourse={addNewCourse}
+                                deleteCourse={deleteCourse}
+                                updateCourse={updateCourse}
+                                enrolling={enrolling}
+                                setEnrolling={setEnrolling}
+                                updateEnrollment={updateEnrollment} />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="Courses/:cid/*" element={
+                        <ProtectedRoute>
+                            <Courses courses={courses} />
+                        </ProtectedRoute>} />
+                </Routes>
             </div>
-        </Session>
+        </div>
     );
 }

@@ -19,7 +19,6 @@ export default function Signin() {
         dispatch(setCurrentUser(user));
 
         console.log(currentUser)
-
         navigate("/Kanbas/Dashboard");
     };
 
