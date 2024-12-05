@@ -21,7 +21,7 @@ export default function Modules() {
     };
     useEffect(() => {
         fetchModules();
-    });
+    }, []);
 
     const dispatch = useDispatch();
 
