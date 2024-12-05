@@ -9,8 +9,8 @@ import { deleteAssign } from "./reducer"
 
 export default function Assignments() {
     const { cid } = useParams();
-    const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const dispatch = useDispatch();
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     return (
