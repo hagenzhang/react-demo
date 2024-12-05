@@ -10,6 +10,8 @@ import { FaAlignJustify } from 'react-icons/fa';
 import PeopleTable from './People/Table';
 
 import { useSelector } from "react-redux";
+import Quizzes from './Quizzes';
+import DetailEditor from './Quizzes/detailEditor';
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -36,6 +38,8 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Assignments/:aid" element={
                             currentUser.role === "FACULTY" ? (<AssignmentEditor />) : "TODO"} />
                         <Route path="People" element={<PeopleTable />} />
+                        <Route path="Quizzes" element={<Quizzes />} />
+                        <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<DetailEditor />) : "TODO"} />
                     </Routes>
                 </div>
             </div>
