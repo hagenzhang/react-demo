@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { create } from "domain";
 
 const initialState = {
     quizzes: [],
@@ -9,8 +8,16 @@ const quizSlice = createSlice({
     name: "quizzes",
     initialState,
     reducers : {
+        setQuizzes: (state, action) => {
+            state.quizzes = action.payload;
+        },
         addQuiz: (state, { payload: quiz }) => {
-
+            /*
+            const newQuiz: any = {
+                _id: new Date().getTime().toString(),
+            }
+            */
+            state.quizzes = [...state.quizzes, quiz] as any;
         },
         deleteQuiz: (state, { payload: quizID }) => {
             state.quizzes = state.quizzes.filter(
@@ -29,3 +36,7 @@ const quizSlice = createSlice({
         },
     }
 });
+
+export const { addQuiz, deleteQuiz, updateQuiz, editQuiz, setQuizzes } =
+    quizSlice.actions;
+export default quizSlice.reducer;

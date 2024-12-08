@@ -10,7 +10,7 @@ export default function Quizzes() {
     const navigate = useNavigate();
 
     const { cid } = useParams();
-    const { quizzes } = useSelector((state: any) => state.quizReducer);
+    // const { quizzes } = useSelector((state: any) => state.quizReducer);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     
