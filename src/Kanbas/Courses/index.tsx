@@ -12,6 +12,7 @@ import PeopleTable from './People/Table';
 import { useSelector } from "react-redux";
 import Quizzes from './Quizzes';
 import DetailEditor from './Quizzes/detailEditor';
+import QuizDetailsView from "./Quizzes/detailsView";
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -40,6 +41,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="People" element={<PeopleTable />} />
                         <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<DetailEditor />) : "TODO"} />
+                        <Route path="Details" element={<QuizDetailsView />} />
                     </Routes>
                 </div>
             </div>
