@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 body * {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -12,25 +13,50 @@ body * {
   }
 }
 
-.list-group.wd > .list-group-item.active {
+.list-group.wd>.list-group-item.active {
   color: black;
   background-color: white;
   border-left: 3px solid black !important;
 }
 
 .btn-secondary {
-    --bs-btn-color: #000 !important;
-    --bs-btn-bg: #c7cdd1 !important;
-    --bs-btn-border-color: #c7cdd1 !important;
-    --bs-btn-hover-color: #fff !important;
-  }
-  .bg-secondary {
-    --bs-secondary-rgb: 199, 205, 209;
-  }
-  .list-group-item {
-    --bs-list-group-border-color: gray;
-  }
-  .wd-lesson {
-    border-left: 3px solid green !important;
-  }
-  
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+#quiz-details-content-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+#quiz-details-left {
+  text-align: right;
+}
+
+#quiz-details-right {
+  text-align: left;
+}
+
+.quiz-detail-category {
+  font-weight: bold;
+}
+
+quiz-details-content th {
+  font-weight: bold;
+}

@@ -3,14 +3,43 @@ import { Navigate, Route, Routes, useParams } from "react-router";
 import { useLocation } from "react-router-dom";
 import * as db from "../../Database";
 import { useState } from "react";
+import detailEditor from "./detailEditor";
+import { FaPencil } from "react-icons/fa6";
 
 export default function QuizDetailsView() {
     const { cid, aid } = useParams();
     const quizzes = db.quizzes;
+    /*
+    - Quiz Type - Graded Quiz (default), Practice Quiz, Graded Survey, Ungraded Survey
+    - Points - the sum of the points of all questions in the quiz
+    - Assignment Group - Quizzes (default), Exams, Assignments, Project
+    - Shuffle Answers - Yes (default) / No
+    - Time Limit - 20 Minutes (default)
+    - Multiple Attempts - No (default) / Yes
+    - How Many Attempts - 1 (default). If Multiple Attempts is Yes, then can configure how many times the student can retake the quiz
+    - Show Correct Answers - If and when correct answers are shown to students
+    - Access Code - Passcode students need to type to access the quiz. Default is blank
+    - One Question at a Time - Yes (default) / No
+    - Webcam Required - No (default) / Yes
+    - Lock Questions After Answering - No (default) / Yes
+    - Due date - date the assignment is due
+    - Available date - date assignment is available
+    - Until date - date assignment is available until
+    */
+
     return (
         <div>
             {/* Quiz title here */}
             <h2><label id="quiz-title">Quiz Name</label></h2>
+
+            <button className="bottom-buttons float-end btn" id="cancel-bt">Preview</button>
+            {/* <button className="bottom-buttons float-end btn" id="cancel-bt"> <FaPencil /> Edit</button> */}
+            <Link to={"./Quizzes/detailEditor"}
+                className="btn btn-lg btn-danger me-1 float-end" role="button">
+                <FaPencil className="position-relative me-2" /> Edit
+            </Link>
+            <hr />
+
             {/* Quiz details */}
             <div id="quiz-details-content">
                 {quizzes
@@ -18,14 +47,71 @@ export default function QuizDetailsView() {
                     .map((quizzes) => (
                         <div>
                             <input className="padding" id="wd-name" defaultValue={quiz.name} /><br /><br />
-                            <span className="quiz-detail-category">Quiz Type</span>
+                            <div id="quiz-details-content-col">
+                                <div id="quiz-details-left">
+                                    <span className="quiz-detail-category">Quiz Type</span>
+                                    <span className="quiz-detail-category">Points</span>
+                                    <span className="quiz-detail-category">Assignment Group</span>
+                                    <span className="quiz-detail-category">Shuffle Answers</span>
+                                    <span className="quiz-detail-category">Time Limit</span>
+                                    <span className="quiz-detail-category">Multiple Attempts</span>
+                                    <span className="quiz-detail-category">View Respones</span>
+                                    <span className="quiz-detail-category">Show Correct Answers</span>
+                                    <span className="quiz-detail-category">One Quesiton at a Time</span>
+                                    <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
+                                    <span className="quiz-detail-category">Required to View Quiz Results</span>
+                                    <span className="quiz-detail-category">Webcam Required</span>
+                                    <span className="quiz-detail-category">Lock Questions After Answering</span>
+                                </div>
+                                <div id="quiz-details-right">
+                                    {quiz.type}
+                                    {quiz.points}
+                                    {quiz.assignmentGroup}
+                                    {quiz.shuffle}
+                                    {quiz.time}
+                                    {quiz.attempts}
+                                    {quiz.viewResponses}
+                                    {quiz.showAnswers}
+                                    {quiz.oneAtATime}
+                                    {quiz.lockdown}
+                                    {quiz.viewResults}
+                                    {quiz.webcam}
+                                    {quiz.lockQuestions}
+                                </div>
+                            </div>
+
+                            {/* Dates table */}
+                            <table>
+                                <tr>
+                                    <th>Due</th>
+                                    <th>For</th>
+                                    <th>Available from</th>
+                                    <th>Until</th>
+                                </tr>
+                                <tr>
+                                    <td>{quiz.dueDate}</td>
+                                    <td>Everyone</td>
+                                    <td>{quiz.availableFrom}</td>
+                                    <td>{quiz.availableUntil}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    ))
+                }
+
+            </div>
+        </div>
+    );
+}
+
+{/* <span className="quiz-detail-category">Quiz Type</span>
                             {quiz.type}
 
                             <span className="quiz-detail-category">Points</span>
                             {quiz.points}
 
                             <span className="quiz-detail-category">Assignment Group</span>
-                            {quiz.assignment-group}
+                            {quiz.assignmentGroup}
 
                             <span className="quiz-detail-category">Shuffle Answers</span>
                             {quiz.shuffle}
@@ -37,145 +123,22 @@ export default function QuizDetailsView() {
                             {quiz.attempts}
 
                             <span className="quiz-detail-category">View Respones</span>
-                            {quiz.view-responses}
+                            {quiz.viewResponses}
 
                             <span className="quiz-detail-category">Show Correct Answers</span>
-                            {quiz.show-answers}
+                            {quiz.showAnswers}
 
                             <span className="quiz-detail-category">One Quesiton at a Time</span>
-                            {quiz.one-at-a-time}
+                            {quiz.oneAtATime}
 
                             <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
                             {quiz.lockdown}
 
                             <span className="quiz-detail-category">Required to View Quiz Results</span>
-                            {quiz.view-results}
+                            {quiz.viewResults}
 
                             <span className="quiz-detail-category">Webcam Required</span>
                             {quiz.webcam}
 
                             <span className="quiz-detail-category">Lock Questions After Answering</span>
-                            {quiz.lock-questions}
-
-                            <br /> <br />
-
-                            <table id="editor-table">
-                                {/* Points */}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top">
-                                        <label htmlFor="wd-points">Points</label>
-                                    </td>
-                                    <td>
-                                        <input className="padding" id="wd-points" value={assignment.points} />
-                                    </td>
-                                </tr><br />
-
-                                {/* Assignment group */}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top">
-                                        <label htmlFor="wd-group">Assignment Group</label>
-                                    </td>
-                                    <td>
-                                        <select name="wd-group" className="padding" id="wd-group" defaultValue={assignment.group}>
-                                            <option value="assignments">ASSIGNMENTS</option>
-                                            <option value="quizzes">QUIZZES</option>
-                                            <option value="exams">EXAMS</option>
-                                            <option value="projects">PROJECTS</option>
-                                        </select>
-                                    </td>
-                                </tr><br />
-
-                                {/* Display grade as */}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top">
-                                        <label htmlFor="wd-display-grade-as">Display grade as</label>
-                                    </td>
-                                    <td>
-                                        <select name="wd-display-grade-as" className="padding" id="wd-display-grade-as" defaultValue={assignment.display}>
-                                            <option value="percentage">Percentage</option>
-                                            <option value="letter">Letter</option>
-                                        </select>
-                                    </td>
-                                </tr><br />
-
-                                {/* Submission type */}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top">
-                                        <label htmlFor="wd-submission-type">Submission Type</label>
-                                    </td>
-                                    <td>
-                                        <select name="wd-submission-type" className="padding" id="submission-type" defaultValue={assignment.submission}>
-                                            <option value="online">Online</option>
-                                            <option value="paper">Paper</option>
-                                        </select>
-                                        <br /><br />
-                                    </td>
-                                </tr>
-
-                                {/* Online entry options */}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top"></td>
-                                    <td>
-                                        Online entry options
-                                        <div>
-                                            <input type="checkbox" id="wd-text-entry" name="wd-text-entry" value="text entry" />
-                                            <label className="padding" htmlFor="wd-text-entry"> Text Entry</label><br />
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id="wd-website-url" name="wd-website-url" value="website url" />
-                                            <label className="padding" htmlFor="wd-website-url"> Website URL</label> <br />
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id="wd-media-recordings" name="wd-media-recordings" value="media recordings" />
-                                            <label className="padding" htmlFor="wd-media-recordings"> Media Recordings</label><br />
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id="wd-student-annotation" name="wd-student-annotation" value="student annotation" />
-                                            <label className="padding" htmlFor="wd-student-annotation"> Student Annotation</label><br />
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id="wd-file-upload" name="wd-file-upload" value="file upload" />
-                                            <label className="padding" htmlFor="wd-file-upload"> File Upload</label><br />
-                                        </div>
-                                    </td>
-                                </tr><br />
-
-                                {/* Assign*/}
-                                <tr>
-                                    <td className="padding-right" align="right" valign="top">
-                                        <label htmlFor="wd-assign-to">Assign</label>
-                                    </td>
-                                    <td className="table-border">
-                                        Assign to<br />
-                                        <input className="padding" type="text" id="wd-assign-to" value={"Everyone"} />
-                                        <br /><br />
-                                        Due<br />
-                                        <input className="padding" type="date" id="wd-due-date" value={assignment.due} />
-                                        <br /><br />
-                                        <table>
-                                            <tr>
-                                                <td align="left">
-                                                    Available from<br />
-                                                    <input className="padding" type="date" id="wd-available-from" value={assignment.available} />
-                                                </td>
-                                                <td>
-                                                    Until<br />
-                                                    <input className="padding" type="date" id="wd-available-until" value={assignment.until} />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <hr />
-                            <div id="bottom-buttons-group">
-                                <Link to="../Assignments"><button className="bottom-buttons" id="cancel-bt">Cancel</button></Link>
-                                <button className="bottom-buttons" id="save-bt">Save</button>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-    );
-}
+                            {quiz.lockQuestions} */}
