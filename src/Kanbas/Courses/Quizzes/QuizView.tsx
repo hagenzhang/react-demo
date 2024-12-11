@@ -56,113 +56,70 @@ export default function QuizView() {
     */
 
     return (
-        <div>
-            <h2><label id="quiz-title">{quiz.title}</label></h2>
+        <div id="quiz-details">
+            <div id="quiz-view-buttons">
+                <button className="btn btn-light btn-outline-secondary btn-sm me-1 float-end" id="cancel-bt">Preview</button>
+                <Link to={`../Quizzes/Editor/${qid}`}
+                    className="btn btn-light btn-outline-secondary btn-sm me-1 float-end" role="button">
+                    <FaPencil className="position-relative me-2" /> Edit
+                </Link>
+            </div>
 
-            <button className="bottom-buttons float-end btn" id="cancel-bt">Preview</button>
-
-            <Link to={`../Quizzes/Editor/${qid}`}
-                className="btn btn-lg btn-danger me-1 float-end" role="button">
-                <FaPencil className="position-relative me-2" /> Edit
-            </Link>
-            <hr />
+            {/* Quiz Title */}
+            <h2><hr /><label id="quiz-title">{quiz.title}</label></h2>
 
             {/* Quiz details */}
             <div id="quiz-details-content">
-                <div>
-                    <input className="padding" id="wd-name" defaultValue={quiz.name} /><br /><br />
-                    <div id="quiz-details-content-col">
-                        <div id="quiz-details-left">
-                            <span className="quiz-detail-category">Quiz Type</span>
-                            <span className="quiz-detail-category">Points</span>
-                            <span className="quiz-detail-category">Assignment Group</span>
-                            <span className="quiz-detail-category">Shuffle Answers</span>
-                            <span className="quiz-detail-category">Time Limit</span>
-                            <span className="quiz-detail-category">Multiple Attempts</span>
-                            <span className="quiz-detail-category">View Respones</span>
-                            <span className="quiz-detail-category">Show Correct Answers</span>
-                            <span className="quiz-detail-category">One Quesiton at a Time</span>
-                            <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
-                            <span className="quiz-detail-category">Required to View Quiz Results</span>
-                            <span className="quiz-detail-category">Webcam Required</span>
-                            <span className="quiz-detail-category">Lock Questions After Answering</span>
-                        </div>
-                        <div id="quiz-details-right">
-                            {quiz.type}
-                            {quiz.points}
-                            {quiz.assignmentGroup}
-                            {quiz.shuffle}
-                            {quiz.time}
-                            {quiz.attempts}
-                            {quiz.viewResponses}
-                            {quiz.showAnswers}
-                            {quiz.oneAtATime}
-                            {quiz.lockdown}
-                            {quiz.viewResults}
-                            {quiz.webcam}
-                            {quiz.lockQuestions}
-                        </div>
+                {/* <input className="padding" id="wd-name" defaultValue={quiz.name} /><br /><br /> */}
+                <div id="quiz-details-content-cols">
+                    <div id="quiz-details-left">
+                        <span className="quiz-detail-category">Quiz Type</span>
+                        <span className="quiz-detail-category">Points</span>
+                        <span className="quiz-detail-category">Assignment Group</span>
+                        <span className="quiz-detail-category">Shuffle Answers</span>
+                        <span className="quiz-detail-category">Time Limit</span>
+                        <span className="quiz-detail-category">Maximum Attempts</span>
+                        {/* <span className="quiz-detail-category">View Respones</span> */}
+                        <span className="quiz-detail-category">Show Correct Answers</span>
+                        <span className="quiz-detail-category">One Quesiton at a Time</span>
+                        <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
+                        {/* <span className="quiz-detail-category">Required to View Quiz Results</span> */}
+                        <span className="quiz-detail-category">Webcam Required</span>
+                        <span className="quiz-detail-category">Lock Questions After Answering</span>
                     </div>
-
-                    {/* Dates table */}
-                    <table>
-                        <tr>
-                            <th>Due</th>
-                            <th>For</th>
-                            <th>Available from</th>
-                            <th>Until</th>
-                        </tr>
-                        <tr>
-                            <td>{quiz.dueDate}</td>
-                            <td>Everyone</td>
-                            <td>{quiz.availableFrom}</td>
-                            <td>{quiz.availableUntil}</td>
-                        </tr>
-                    </table>
+                    <div id="quiz-details-right">
+                        {quiz.quizType}
+                        {quiz.points}
+                        {quiz.assignmentGroup}
+                        {quiz.shuffleAnswers}
+                        {quiz.timeLimitMin}
+                        {quiz.maxAttempts}
+                        {/* {quiz.viewResponses} */}
+                        {quiz.showCorrectAnswers}
+                        {quiz.oneQuestionAtATime}
+                        {quiz.lockdown}
+                        {/* {quiz.viewResults} */}
+                        {quiz.webcamRequired}
+                        {quiz.lockQuestionAfterAns}
+                    </div>
                 </div>
             </div>
+            {/* Dates table */}
+            <table>
+                    <tr>
+                        <th>Due</th>
+                        <th>For</th>
+                        <th>Available from</th>
+                        <th>Until</th>
+                    </tr>
+                    <tr>
+                        <td>{quiz.dueDate}</td>
+                        <td>Everyone</td>
+                        <td>{quiz.availableDate}</td>
+                        <td>{quiz.closeDate}</td>
+                    </tr>
+                </table>
         </div>
     );
 
 }
-
-
-
-/* <span className="quiz-detail-category">Quiz Type</span>
-                            {quiz.type}
-
-                            <span className="quiz-detail-category">Points</span>
-                            {quiz.points}
-
-                            <span className="quiz-detail-category">Assignment Group</span>
-                            {quiz.assignmentGroup}
-
-                            <span className="quiz-detail-category">Shuffle Answers</span>
-                            {quiz.shuffle}
-
-                            <span className="quiz-detail-category">Time Limit</span>
-                            {quiz.time}
-
-                            <span className="quiz-detail-category">Multiple Attempts</span>
-                            {quiz.attempts}
-
-                            <span className="quiz-detail-category">View Respones</span>
-                            {quiz.viewResponses}
-
-                            <span className="quiz-detail-category">Show Correct Answers</span>
-                            {quiz.showAnswers}
-
-                            <span className="quiz-detail-category">One Quesiton at a Time</span>
-                            {quiz.oneAtATime}
-
-                            <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
-                            {quiz.lockdown}
-
-                            <span className="quiz-detail-category">Required to View Quiz Results</span>
-                            {quiz.viewResults}
-
-                            <span className="quiz-detail-category">Webcam Required</span>
-                            {quiz.webcam}
-
-                            <span className="quiz-detail-category">Lock Questions After Answering</span>
-                            {quiz.lockQuestions} */
