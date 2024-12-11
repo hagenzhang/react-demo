@@ -1,42 +1,47 @@
+import react, { useState, useEffect } from "react";
 import { CiNoWaitingSign } from "react-icons/ci";
-import * as db from "../../Database";
-import { useNavigate, useParams } from "react-router";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import * as quizClient from "./client";
-import * as coursesClient from "../client";
+import { useLocation, useParams } from "react-router";
+import * as client from "./client";
 import { Link } from "react-router-dom";
 
 
-export default function DetailEditor() {
+export default function QuizEditor() {
     const { cid, qid } = useParams();
-    const quizzes = useSelector(
-        (state: any) => state.quizzesReducer.quizzes
-    );
-    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
-    const quiz = quizzes.find((quiz: any) => quiz._id == qid) || {
-        title: "",
-        points: 0,
-        course: cid,
-        _id: new Date().getTime().toString(),
-    }
-    const [selectedQuiz, setSelectedQuiz] = useState(quiz);
-    const isEdit = quizzes.findIndex((q: any) => q._id === qid) !== -1;
+    const [currentQuiz, setCurrentQuiz] = useState<any>({});
+
+    const isEdit = qid && true; // isEdit = true if qid is defined, else is false (new quiz)
 
     // everytime using async pair up with await
     const handleSave = async () => {
         if (isEdit) {
-            await quizClient.updateQuiz(selectedQuiz);
+            await client.updateQuiz(qid!, currentQuiz);
         } else {
-            await coursesClient.createQuiz(cid || "", selectedQuiz);
+            await client.createQuiz(currentQuiz);
         }
-        navigate(`/Kanbas/Courses/${cid}/Quizzes`);
     }
+
+    // Fetch assignment details if editing
+    useEffect(() => {
+        if (isEdit) {
+            try {
+                const setQuiz = async () => {
+                    const data: any = await client.getQuiz(qid!)
+                    setCurrentQuiz(data.data);
+
+                    console.log("Details Fetched!")
+                    console.log("data: ", data.data)
+                };
+                setQuiz();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }, [qid, isEdit]);
 
     return (
         <div>
-
             <div>
                 <h5 className="published float-end">
                     <CiNoWaitingSign /> Not Published
@@ -50,10 +55,10 @@ export default function DetailEditor() {
             {/* input for the assignment name */}
             <div>
                 <input type="text" className="padding form-control form-control-md"
-                    id="wd-name" placeholder="Quiz Name" value={selectedQuiz.title}
-                    onChange={(e) => setSelectedQuiz({ ...selectedQuiz, title: e.target.value })} /> <br />
+                    id="wd-name" placeholder="Quiz Name" value={currentQuiz.title}
+                    onChange={(e) => setCurrentQuiz({ ...currentQuiz, title: e.target.value })} /> <br />
                 <div className="mb-3">
-                    <textarea id="wd-description" cols={150} rows={3} placeholder="Quiz Description" />
+                    <textarea id="wd-description" cols={150} rows={3} value={currentQuiz.description} />
                 </div>
 
                 <table id="editor-table">
@@ -196,9 +201,15 @@ export default function DetailEditor() {
                 </table>
             </div>
             <hr />
-            <button className="bottom-buttons float-end btn btn-danger" id="save-bt" onClick={handleSave}>Save</button>
-            <button className="bottom-buttons float-end btn btn-success" id="cancel-bt">Save and Publish</button>
-            <Link to={`/Kanbas/Courses/${selectedQuiz.course}/Quizzes`} className={`list-group-item list-group-item-action text-danger border-0'`}>
+            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`}>
+                <button className="bottom-buttons float-end btn btn-danger" id="save-bt" onClick={handleSave}>Save</button>
+            </Link>
+
+            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`}>
+                <button className="bottom-buttons float-end btn btn-success" id="cancel-bt">Save and Publish</button>
+            </Link>
+
+            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`} className={`list-group-item list-group-item-action text-danger border-0'`}>
                 <button className="bottom-buttons float-end btn btn-secondary" id="cancel-bt">Cancel</button>
             </Link>
         </div>

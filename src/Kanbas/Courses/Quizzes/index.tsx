@@ -41,27 +41,6 @@ export default function Quizzes() {
         }
     }
 
-    /*
-    _id: "q0",
-    title: "Default Quiz",
-    description: "A Very Default Description Here",
-    course: "RS101",
-    quizType: quizType.GRADED,
-    points: 100,
-    assignmentGroup: quizGroup.QUIZZES,
-    shuffleAnswers: true,
-    timeLimitMin: 20,
-    maxAttempts: 1, // no multiple attempts boolean, just set this value
-    showCorrectAnswers: true,
-    accessCode: "",
-    oneQuestionAtATime: true, // one question at a time
-    webcamRequired: false,
-    lockQuestionAfterAns: false,
-    dueDate: "2025-05-15T23:59",
-    availableDate: "2024-05-15T00:00",
-    closeDate: "2025-05-16T23:59", // until date equivalent
-    */
-
     return (
         <div id="wd-quizzes">
             {(currentUser.role === "FACULTY" || currentUser.role === "ADMIN")

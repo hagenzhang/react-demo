@@ -11,7 +11,7 @@ import PeopleTable from './People/Table';
 
 import { useSelector } from "react-redux";
 import Quizzes from './Quizzes';
-import DetailEditor from './Quizzes/QuizEditor';
+import QuizEditor from './Quizzes/QuizEditor';
 import QuizView from "./Quizzes/QuizView";
 
 export default function Courses({ courses }: { courses: any[]; }) {
@@ -36,11 +36,12 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Home" element={<Home />} />
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Assignments" element={<Assignments />} />
-                        <Route path="Assignments/:aid" element={
-                            currentUser.role === "FACULTY" ? (<AssignmentEditor />) : "TODO"} />
+                        <Route path="Assignments/:aid" element={ currentUser.role === "FACULTY" ? (<AssignmentEditor />) : "TODO"} />
                         <Route path="People" element={<PeopleTable />} />
                         <Route path="Quizzes" element={<Quizzes />} />
-                        <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<DetailEditor />) : "TODO"} />
+                        <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<QuizView />) : "TODO"} />
+                        <Route path="Quizzes/Editor" element={ currentUser.role === "FACULTY" ? (<QuizEditor />) : "TODO"} />
+                        <Route path="Quizzes/Editor/:qid" element={ currentUser.role === "FACULTY" ? (<QuizEditor />) : "TODO"} />
                         <Route path="Details" element={<QuizView />} />
                         <Route path="Questions" element={ <></> /** <QuestionDetails/>} */ } />
                     </Routes>
