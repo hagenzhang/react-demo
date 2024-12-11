@@ -82,7 +82,7 @@ export default function QuizView() {
                         {/* <span className="quiz-detail-category">View Respones</span> */}
                         <span className="quiz-detail-category">Show Correct Answers</span>
                         <span className="quiz-detail-category">One Quesiton at a Time</span>
-                        <span className="quiz-detail-category">Require Respondus LockDown Browser</span>
+                        <span className="quiz-detail-category">LockDown Browser</span>
                         {/* <span className="quiz-detail-category">Required to View Quiz Results</span> */}
                         <span className="quiz-detail-category">Webcam Required</span>
                         <span className="quiz-detail-category">Lock Questions After Answering</span>
