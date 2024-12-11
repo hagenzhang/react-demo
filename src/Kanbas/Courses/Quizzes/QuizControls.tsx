@@ -14,7 +14,7 @@ export default function QuizControls() {
             </div>
 
             <div className="wd-button float-end">
-                <Link to={"../Quizzes/Detail"}
+                <Link to={"../Quizzes/Editor/Detail"}
                     id="wd-add-assignment-btn"
                     className="btn btn-lg btn-danger me-1 float-end"
                     role="button"
