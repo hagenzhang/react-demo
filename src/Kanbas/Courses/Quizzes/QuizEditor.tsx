@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { CiNoWaitingSign } from "react-icons/ci";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import * as client from "./client";
 import { Link } from "react-router-dom";
 
@@ -88,16 +88,6 @@ export default function QuizEditor() {
 
     return (
         <div>
-            <div className="my-4 pb-3">
-                <h5 className="published float-end">
-                    <CiNoWaitingSign /> Not Published
-                </h5>
-
-                <h5 className="points float-end mx-5" style={{ marginLeft: '150px' }}>
-                    Points: {totalPoints}
-                </h5>
-            </div>
-
             <div id="wd-quiz-editor">
                 <form className="p-4">
                     <input type="text" className="padding form-control form-control-md"
