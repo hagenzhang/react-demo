@@ -6,6 +6,15 @@ import { FaPencil } from "react-icons/fa6";
 
 import * as client from "./client"
 
+/*
+Screen that should display all of the details of the Quiz.
+
+There should also be buttons in this screen to navigate to the Quiz Editor
+and the Quiz preview.
+
+TODO: formatting + quiz preview functionality!
+*/
+
 export default function QuizView() {
     const { cid, qid } = useParams();
 
@@ -51,7 +60,7 @@ export default function QuizView() {
             <h2><label id="quiz-title">{quiz.title}</label></h2>
 
             <button className="bottom-buttons float-end btn" id="cancel-bt">Preview</button>
-            {/* <button className="bottom-buttons float-end btn" id="cancel-bt"> <FaPencil /> Edit</button> */}
+
             <Link to={`../Quizzes/Editor/${qid}`}
                 className="btn btn-lg btn-danger me-1 float-end" role="button">
                 <FaPencil className="position-relative me-2" /> Edit

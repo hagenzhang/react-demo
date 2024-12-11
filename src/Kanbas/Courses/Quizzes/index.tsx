@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
@@ -7,11 +6,30 @@ import { format } from 'date-fns';
 
 import QuizControls from './QuizControls';
 
-
 import * as client from "./client"
 import { BsGripVertical } from 'react-icons/bs';
 import AssignmentsControlButtons from '../Assignments/AssignmentsControlButtons';
 import AssignmentControlButtons from '../Assignments/AssignmentControlButtons';
+
+/*
+Renders the "Main" screen for quizzes.
+
+Similar to the assignment list screen. The control flow is as follows:
+
+ - The "+ Quiz" button should lead to the QuizEditor with no qid. This is for creating a brand new quiz.
+   TODO: add in question creation workflow. We need to find a good way to implement this asap!
+
+ - "+ Group" and the Search Bar currently have no use, and I think it should be fine that way
+
+ - Clicking on the quiz itself (each row in the table) should navigate to the quiz details display screen.
+   The quiz details screen then navigates to editing/previewing each individual quiz.
+   TODO: this screen needs to be styled
+
+ - TODO: need to implement the triple dot dropdown menu and the published / unpublished logic.
+
+ - TODO: need to implement question count & if the user is a student, display their score if they took the exam.
+
+*/
 
 export default function Quizzes() {
     const { cid } = useParams();

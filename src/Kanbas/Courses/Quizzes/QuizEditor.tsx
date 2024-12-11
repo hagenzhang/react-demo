@@ -4,6 +4,15 @@ import { useParams } from "react-router";
 import * as client from "./client";
 import { Link } from "react-router-dom";
 
+/*
+This screen is going to show up for both editing an individual quiz
+and for creating a brand new quiz.
+
+TODO: creating a brand new quiz doesn't work
+TODO: add question creation / editing flow for this screen.
+TODO: formatting
+*/
+
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
@@ -12,7 +21,6 @@ export default function QuizEditor() {
 
     const isEdit = qid && true; // isEdit = true if qid is defined, else is false (new quiz)
 
-    // everytime using async pair up with await
     const handleSave = async () => {
         if (isEdit) {
             await client.updateQuiz(qid!, currentQuiz);
@@ -21,7 +29,7 @@ export default function QuizEditor() {
         }
     }
 
-    // Fetch assignment details if editing
+    // Fetch quiz details if editing
     useEffect(() => {
         if (isEdit) {
             try {
@@ -50,8 +58,6 @@ export default function QuizEditor() {
                 </h5>
             </div>
 
-
-            {/* input for the assignment name */}
             <div>
                 <input type="text" className="padding form-control form-control-md"
                     id="wd-name" placeholder="Quiz Name" value={currentQuiz.title}

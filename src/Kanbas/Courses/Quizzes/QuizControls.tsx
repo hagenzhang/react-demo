@@ -1,6 +1,8 @@
 import { FaMagnifyingGlass, FaPlus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
+
+
 export default function QuizControls() {
     return (
         <div id="wd-assignments-controls" className="text-nowrap">

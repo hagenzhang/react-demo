@@ -1,5 +1,12 @@
 import axios from "axios"
 
+/*
+Handles all of the quiz CRUD operations.
+Note that we don't need to provide quiz ID for creating a new quiz!
+This is because of nanoid, it will help us generate the ID in the backend.
+*/
+
+
 const axiosWithCredentials = axios.create({ withCredentials: true });
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const QUIZ_API = `${REMOTE_SERVER}/api/quizzes`;
