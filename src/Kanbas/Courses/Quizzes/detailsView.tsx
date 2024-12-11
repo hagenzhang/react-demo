@@ -44,9 +44,9 @@ export default function QuizDetailsView() {
             <div id="quiz-details-content">
                 {quizzes
                     .filter((quiz: any) => quiz.course === cid && quiz._id == aid)
-                    .map((quizzes) => (
+                    .map((quiz) => (
                         <div>
-                            <input className="padding" id="wd-name" defaultValue={quiz.name} /><br /><br />
+                            <input className="padding" id="wd-name" defaultValue={quiz.title} /><br /><br />
                             <div id="quiz-details-content-col">
                                 <div id="quiz-details-left">
                                     <span className="quiz-detail-category">Quiz Type</span>
@@ -64,19 +64,19 @@ export default function QuizDetailsView() {
                                     <span className="quiz-detail-category">Lock Questions After Answering</span>
                                 </div>
                                 <div id="quiz-details-right">
-                                    {quiz.type}
+                                    {quiz.quizType}
                                     {quiz.points}
                                     {quiz.assignmentGroup}
-                                    {quiz.shuffle}
-                                    {quiz.time}
-                                    {quiz.attempts}
-                                    {quiz.viewResponses}
-                                    {quiz.showAnswers}
-                                    {quiz.oneAtATime}
-                                    {quiz.lockdown}
-                                    {quiz.viewResults}
-                                    {quiz.webcam}
-                                    {quiz.lockQuestions}
+                                    {quiz.shuffleAnswers}
+                                    {quiz.timeLimitMin}
+                                    {quiz.maxAttempts}
+                                    {/* {quiz.viewResponses} */}
+                                    {quiz.showCorrectAnswers}
+                                    {quiz.oneQuestionAtATime}
+                                    {quiz.lockQuestionAfterAns}
+                                    {/* {quiz.viewResults} */}
+                                    {quiz.webcamRequired}
+                                    {/* {quiz.lockQuestionAfterAns} */}
                                 </div>
                             </div>
 
@@ -91,14 +91,13 @@ export default function QuizDetailsView() {
                                 <tr>
                                     <td>{quiz.dueDate}</td>
                                     <td>Everyone</td>
-                                    <td>{quiz.availableFrom}</td>
-                                    <td>{quiz.availableUntil}</td>
+                                    <td>{quiz.availableDate}</td>
+                                    <td>{quiz.closeDate}</td>
                                 </tr>
                             </table>
                         </div>
                     ))
                 }
-
             </div>
         </div>
     );

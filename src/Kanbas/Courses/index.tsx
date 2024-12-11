@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Quizzes from './Quizzes';
 import DetailEditor from './Quizzes/detailEditor';
 import QuizDetailsView from "./Quizzes/detailsView";
+import QuestionDetails from "./Quizzes/questionEditor";
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -42,6 +43,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<DetailEditor />) : "TODO"} />
                         <Route path="Details" element={<QuizDetailsView />} />
+                        <Route path="Questions" element={<QuestionDetails/>} />
                     </Routes>
                 </div>
             </div>
