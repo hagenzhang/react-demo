@@ -43,10 +43,10 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<QuizView />) : "TODO"} />
                         <Route path="Quizzes/Detail" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
                         <Route path="Quizzes/Detail/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Question/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Question" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Questions/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Questions" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
                         <Route path="Details" element={<QuizView />} />
-                        <Route path="Questions" element={ <></> /** <QuestionDetails/>} */ } />
+                        <Route path="Question" element={ <></> /** <QuestionDetails/>} */ } />
                     </Routes>
                 </div>
             </div>

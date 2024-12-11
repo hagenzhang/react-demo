@@ -13,7 +13,7 @@ export default function Editors() {
 
    const links = [
       { label: "Detail", path: `/Kanbas/Courses/${cid}/Quizzes/Detail/${qid}`},
-      { label: "Questions", path: `/Kanbas/Courses/${cid}/Quizzes/Question/${qid}`},
+      { label: "Questions", path: `/Kanbas/Courses/${cid}/Quizzes/Questions/${qid}`},
    ];
    return (
       <div>
