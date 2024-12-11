@@ -201,15 +201,15 @@ export default function QuizEditor() {
                 </table>
             </div>
             <hr />
-            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`}>
+            <Link to={`/Kanbas/Courses/${cid}/Quizzes`}>
                 <button className="bottom-buttons float-end btn btn-danger" id="save-bt" onClick={handleSave}>Save</button>
             </Link>
 
-            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`}>
+            <Link to={`/Kanbas/Courses/${cid}/Quizzes`}>
                 <button className="bottom-buttons float-end btn btn-success" id="cancel-bt">Save and Publish</button>
             </Link>
 
-            <Link to={`/Kanbas/Courses/${currentQuiz.course}/Quizzes`} className={`list-group-item list-group-item-action text-danger border-0'`}>
+            <Link to={`/Kanbas/Courses/${cid}/Quizzes`} className={`list-group-item list-group-item-action text-danger border-0'`}>
                 <button className="bottom-buttons float-end btn btn-secondary" id="cancel-bt">Cancel</button>
             </Link>
         </div>
