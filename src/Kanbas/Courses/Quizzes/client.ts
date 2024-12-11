@@ -41,3 +41,19 @@ export const updateQuiz = async (quizID: string, quiz: any) => {
     return data;
 }
 
+// ============================================================================
+
+export const getQuizQuestions = async (quizID: string) => {
+    const { data } = await axiosWithCredentials
+        .get(`${QUIZ_API}/:quizID/questions`);
+    return data
+}
+
+// assign a bunch of questions to a quiz
+// questions body should come as:
+// { questions: [ ... ] }
+export const updateQuizQuestions = async (quizID: string, questionsObj: any) => {
+    const response = await axiosWithCredentials
+        .post(`${QUIZ_API}/:quizID/questions`, questionsObj);
+    return response.data;
+}
