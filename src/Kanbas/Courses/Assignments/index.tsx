@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AssignmentsControls from './AssignmentsControls';
 import { BsGripVertical } from 'react-icons/bs';
 import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAssign } from "./reducer"
+
+import * as client from './client'
 
 export default function Assignments() {
-    const { cid } = useParams();
     const dispatch = useDispatch();
-    const { assignments } = useSelector((state: any) => state.assignmentReducer);
+
+    const { cid } = useParams();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+    const [assignments, setAssignments] = useState<any[]>([]);
+
+    // Fetch assignments when component mounts
+    useEffect(() => {
+        const fetchAssignments = async () => {
+            try {
+                const data = await client.findAssignmentsForCourse(cid!);
+                console.log("Assignments fetched successfully!")
+                setAssignments(data);
+            } catch (err) {
+                console.error("Failed to load assignments: ", err);
+            }
+        };
+        fetchAssignments();
+    }, [cid]);
+
+    // Handle assignment deletion
+    const handleDeleteAssignment = async (assignmentID: string) => {
+        try {
+            // Call the backend to delete the assignment
+            await client.deleteAssignment(assignmentID)
+
+            // Re-fetch the assignments
+            const data = await client.findAssignmentsForCourse(cid!);
+            setAssignments(data);
+        } catch (err) {
+            console.error("Failed to delete + reload assignments: ", err);
+        }
+    };
 
     return (
         <div id="wd-assignments">
@@ -33,7 +64,6 @@ export default function Assignments() {
 
             <ul id="wd-assignment-list" className="list-group rounded-0">
                 {assignments
-                    .filter((assign: any) => assign.course === cid)
                     .map((assign: any) => (
                         <li className="wd-assignment-list-item d-flex align-items-center list-group-item p-3 ps-1">
                             <BsGripVertical className="me-2 fs-3" />
@@ -54,9 +84,7 @@ export default function Assignments() {
                             {currentUser.role === "FACULTY" && (
                                 <AssignmentControlButtons
                                     assignmentID={assign._id}
-                                    deleteAssignment={(assignmentID) => {
-                                        dispatch(deleteAssign(assignmentID));
-                                    }} />
+                                    deleteAssignment={handleDeleteAssignment} />
                             )}
                         </li>)
                     )

@@ -1,46 +1,71 @@
-import React, { useState } from 'react';
-import { addAssign, updateAssign } from './reducer'
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import * as client from './client'
 
 export default function AssignmentEditor() {
     const { pathname } = useLocation();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const classID = pathname.split("/")[3];
     const assignmentID = pathname.split("/").pop();
 
     const isNewAssignment = assignmentID === "Editor";
 
-    const assignments = useSelector((state: any) => state.assignmentReducer.assignments);
-    const existingAssignment = assignments.find((obj: { _id: string | undefined; }) => obj._id === assignmentID);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [points, setPoints] = useState(0);
+    const [due, setDue] = useState("");
+    const [release, setRelease] = useState("");
+    const [close, setClose] = useState("");
 
-    const [title, setTitle] = useState(existingAssignment?.title || "");
-    const [description, setDescription] = useState(existingAssignment?.description || "");
-    const [points, setPoints] = useState(existingAssignment?.points || 0);
-    const [due, setDue] = useState(existingAssignment?.due || "");
-    const [release, setRelease] = useState(existingAssignment?.release || "");
-    const [close, setClose] = useState(existingAssignment?.close || "");
+    // Fetch assignment details if editing
+    useEffect(() => {
+        if (!isNewAssignment) {
+            try {
+                const setData = async () => {
+                    const data: any = await client.getAssignment(assignmentID!)
+                    setTitle(data.data.title || "");
+                    setDescription(data.data.description || "");
+                    setPoints(data.data.points || 0);
+                    setDue(data.data.due || "");
+                    setRelease(data.data.release || "");
+                    setClose(data.data.close || "");
+
+                    console.log("Details Fetched!")
+                    console.log("data: ", data)
+                };
+                setData();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }, [assignmentID, isNewAssignment]);
 
     const handleSave = () => {
         const newAssignment = {
             title,
             description,
-            points,
-            due,
+            course: classID,
             release,
             close,
-            course: classID,
+            due,
+            points,
         };
 
         if (isNewAssignment) {
-            dispatch(addAssign(newAssignment));
+            try {
+                client.createAssignment(newAssignment)
+            } catch (err) {
+                console.error(err);
+            }
         } else {
-            dispatch(updateAssign({ ...newAssignment, _id: assignmentID }));
+            try {
+                client.updateAssignment(assignmentID!, newAssignment)
+            } catch (err) {
+                console.log(err)
+            }
         }
 
-        navigate(`/Kanbas/Courses/${classID}/Assignments`);
+        // navigate(`/Kanbas/Courses/${classID}/Assignments`);
     };
 
     return (
@@ -53,7 +78,7 @@ export default function AssignmentEditor() {
                     <div className="col-md-9">
                         <input id="wd-name"
                             className="form-control"
-                            defaultValue={title}
+                            value={title}
                             onChange={(e) => setTitle(e.target.value)} />
                     </div>
                 </div>
@@ -65,7 +90,7 @@ export default function AssignmentEditor() {
                     <div className="col-md-9">
                         <input id="wd-description"
                             className="form-control"
-                            defaultValue={description}
+                            value={description}
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
@@ -77,8 +102,8 @@ export default function AssignmentEditor() {
                     <div className="col-md-9">
                         <input id="wd-points"
                             className="form-control"
-                            defaultValue={points}
-                            onChange={(e) => setPoints(e.target.value)} />
+                            value={points}
+                            onChange={(e) => setPoints(Number(e.target.value))} />
                     </div>
                 </div>
 
@@ -97,7 +122,7 @@ export default function AssignmentEditor() {
                                     <input type="datetime-local"
                                         id="wd-due-date"
                                         className="form-control"
-                                        defaultValue={due}
+                                        value={due}
                                         onChange={(e) => setDue(e.target.value)} />
                                 </div>
 
@@ -111,7 +136,7 @@ export default function AssignmentEditor() {
                                     <input type="datetime-local"
                                         id="wd-available-from"
                                         className="form-control"
-                                        defaultValue={release}
+                                        value={release}
                                         onChange={(e) => setRelease(e.target.value)} />
                                 </div>
 
@@ -122,7 +147,7 @@ export default function AssignmentEditor() {
                                     <input type="datetime-local"
                                         id="wd-available-until"
                                         className="form-control"
-                                        defaultValue={close}
+                                        value={close}
                                         onChange={(e) => setClose(e.target.value)} />
                                 </div>
                             </div>
