@@ -40,10 +40,10 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="People" element={<PeopleTable />} />
                         <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<QuizView />) : "TODO"} />
-                        <Route path="Quizzes/Detail" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Detail/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Questions/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Questions" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Editor/Detail" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Editor/Detail/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Editor/Questions/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
+                        <Route path="Quizzes/Editor/Questions" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
                         <Route path="Detail" element={<QuizView />} />
                         <Route path="Question" element={ <></> /** <QuestionDetails/>} */ } />
                     </Routes>

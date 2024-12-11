@@ -12,8 +12,8 @@ export default function Editors() {
    const [totalPoints, setTotalPoints] = useState(0);
 
    const links = [
-      { label: "Detail", path: `/Kanbas/Courses/${cid}/Quizzes/Detail/${qid}`},
-      { label: "Questions", path: `/Kanbas/Courses/${cid}/Quizzes/Questions/${qid}`},
+      { label: "Detail", path: `/Kanbas/Courses/${cid}/Quizzes/Editor/Detail/${qid}`},
+      { label: "Questions", path: `/Kanbas/Courses/${cid}/Quizzes/Editor/Questions/${qid}`},
    ];
    return (
       <div>
