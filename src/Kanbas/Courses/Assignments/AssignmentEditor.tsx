@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import * as client from './client'
 
 export default function AssignmentEditor() {
@@ -64,8 +64,6 @@ export default function AssignmentEditor() {
                 console.log(err)
             }
         }
-
-        // navigate(`/Kanbas/Courses/${classID}/Assignments`);
     };
 
     return (

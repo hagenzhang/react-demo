@@ -4,13 +4,11 @@ import { BsGripVertical } from 'react-icons/bs';
 import AssignmentsControlButtons from './AssignmentsControlButtons';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import * as client from './client'
 
 export default function Assignments() {
-    const dispatch = useDispatch();
-
     const { cid } = useParams();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -47,13 +45,9 @@ export default function Assignments() {
     return (
         <div id="wd-assignments">
             {currentUser.role === "FACULTY" && (
-                <>
+                <div className="wd-assignment-controls mb-5 pb-5">
                     <AssignmentsControls />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                </>
+                </div>
             )}
 
             <div className="wd-title p-3 ps-2 bg-secondary">

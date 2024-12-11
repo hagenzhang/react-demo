@@ -1,11 +1,11 @@
 import { CiNoWaitingSign } from "react-icons/ci";
+import { useLocation } from "react-router";
 
-export default function detailEditor() {
-    //const { cid, } = useParams();
-    //const navigate = useNavigate();
-
+export default function QuizEditor() {
+    const { pathname } = useLocation();
+    
     return (
-        <div>
+        <div id="wd-quiz-editor">
             <div>
             <h5 className="published float-end">
                 <CiNoWaitingSign /> Not Published
@@ -39,7 +39,7 @@ export default function detailEditor() {
                 </tr><br />
                 <tr>
                     <td align="right" valign="top">
-                        <label htmlFor="wd-group">Assignment Group</label>
+                        <label htmlFor="wd-group">Quiz Group</label>
                     </td>
                     <td>
                         <select name="wd-group" className="padding" id="wd-group">
