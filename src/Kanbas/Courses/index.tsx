@@ -42,6 +42,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Quizzes" element={<Quizzes />} />
                         <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<DetailEditor />) : "TODO"} />
                         <Route path="Details" element={<QuizView />} />
+                        <Route path="Questions" element={ <></> /** <QuestionDetails/>} */ } />
                     </Routes>
                 </div>
             </div>
