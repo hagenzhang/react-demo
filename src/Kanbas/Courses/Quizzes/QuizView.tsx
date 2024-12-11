@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
@@ -17,13 +17,13 @@ export default function QuizView() {
             try {
                 const data = await client.getQuiz(qid!);
                 console.log("Quiz fetched successfully!")
-                setQuiz(data);
+                setQuiz(data.data);
             } catch (err) {
                 console.error("Failed to load assignments: ", err);
             }
         };
         fetchQuiz();
-    }, [qid]);
+    }, [qid, cid]);
 
     /*
         _id: "q0",
@@ -48,12 +48,11 @@ export default function QuizView() {
 
     return (
         <div>
-            {/* Quiz title here */}
-            <h2><label id="quiz-title">Quiz Name</label></h2>
+            <h2><label id="quiz-title">{quiz.title}</label></h2>
 
             <button className="bottom-buttons float-end btn" id="cancel-bt">Preview</button>
             {/* <button className="bottom-buttons float-end btn" id="cancel-bt"> <FaPencil /> Edit</button> */}
-            <Link to={"./Quizzes/detailEditor"}
+            <Link to={`../Quizzes/Editor/${qid}`}
                 className="btn btn-lg btn-danger me-1 float-end" role="button">
                 <FaPencil className="position-relative me-2" /> Edit
             </Link>
@@ -120,7 +119,7 @@ export default function QuizView() {
 
 
 
-{/* <span className="quiz-detail-category">Quiz Type</span>
+/* <span className="quiz-detail-category">Quiz Type</span>
                             {quiz.type}
 
                             <span className="quiz-detail-category">Points</span>
@@ -157,4 +156,4 @@ export default function QuizView() {
                             {quiz.webcam}
 
                             <span className="quiz-detail-category">Lock Questions After Answering</span>
-                            {quiz.lockQuestions} */}
+                            {quiz.lockQuestions} */

@@ -32,12 +32,14 @@ export default function PeopleDetails() {
         navigate(-1);
     };
 
-    const fetchUser = async () => {
-        if (!uid) return;
-        const user = await client.findUserById(uid);
-        setUser(user);
-    };
+    
     useEffect(() => {
+        const fetchUser = async () => {
+            if (!uid) return;
+            const user = await client.findUserById(uid);
+            setUser(user);
+        };
+        
         if (uid) fetchUser();
     }, [uid]);
 

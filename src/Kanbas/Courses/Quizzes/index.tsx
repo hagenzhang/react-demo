@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { format } from 'date-fns';
+
 import QuizControls from './QuizControls';
+
 
 import * as client from "./client"
 import { BsGripVertical } from 'react-icons/bs';
@@ -41,6 +44,26 @@ export default function Quizzes() {
         }
     }
 
+    // Formats the time strings into something human-readable
+    function formatDate(dateString: string): string {
+        return format(new Date(dateString), 'MM/dd/yyyy, hh:mm a');
+    }
+
+    // Checks if the quiz is still available based on the current date and the available / close date strings.
+    function isQuizAvailable(availableDate: string, closeDate: string): string {
+        const now = new Date();
+        const close = new Date(closeDate)
+        const open = new Date(availableDate)
+        
+        if (close < now) {
+            return "Closed";
+        } else if (open > now) {
+            return "Not Available Until " + open
+        } else {
+            return "Available"
+        }
+    }
+
     return (
         <div id="wd-quizzes">
             {(currentUser.role === "FACULTY" || currentUser.role === "ADMIN")
@@ -56,7 +79,13 @@ export default function Quizzes() {
             </div>
 
             <ul id="wd-quiz-list" className="list-group rounded-0">
-                { quizzes
+                {quizzes
+                    .filter((quiz: any) => {
+                        if (currentUser.role === "STUDENT") {
+                            return quiz.published! // if the quiz is published, display. else, false
+                        }
+                        return true // if you're not a student, display all quizzes regardless of published status
+                    })
                     .map((quiz: any) => (
                         <li className="wd-quiz-list-item d-flex align-items-center list-group-item p-3 ps-1">
                             <BsGripVertical className="me-2 fs-3" />
@@ -66,12 +95,11 @@ export default function Quizzes() {
                                     href={`#/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}>
                                     {quiz.title}
                                 </a>
+
                                 <br />
-                                <span style={{ color: "crimson" }}> Multiple Modules </span>
-                                | <b> Not available until: </b>
-                                {`${quiz.availableDate}`} <br />
-                                <b>Due</b> {`${quiz.dueDate}`} |
-                                {` ${quiz.points} points`}
+
+                                <b>{ isQuizAvailable(quiz.availableDate, quiz.closeDate) } </b> | <b>Due:</b> { formatDate(quiz.dueDate) }
+                                { ` | ${quiz.points} points | # quiz questions here (TODO)` } 
                             </div>
 
                             {currentUser.role === "FACULTY" && (

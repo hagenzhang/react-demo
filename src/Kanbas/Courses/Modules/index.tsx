@@ -10,20 +10,21 @@ import * as coursesClient from "../client";
 import * as modulesClient from "./client";
 
 export default function Modules() {
+    const dispatch = useDispatch();
+
     const { cid } = useParams();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     const [moduleName, setModuleName] = useState("");
     const { modules } = useSelector((state: any) => state.modulesReducer);
-    const fetchModules = async () => {
-        const modules = await coursesClient.findModulesForCourse(cid as string);
-        dispatch(setModules(modules));
-    };
-    useEffect(() => {
-        fetchModules();
-    }, []);
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        const fetchModules = async () => {
+            const modules = await coursesClient.findModulesForCourse(cid as string);
+            dispatch(setModules(modules));
+        };
+        fetchModules();
+    }, [dispatch, cid]);
 
     const createModuleForCourse = async () => {
         if (!cid) return;

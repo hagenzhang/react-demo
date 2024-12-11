@@ -1,13 +1,12 @@
-import react, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CiNoWaitingSign } from "react-icons/ci";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import * as client from "./client";
 import { Link } from "react-router-dom";
 
 
 export default function QuizEditor() {
     const { cid, qid } = useParams();
-    const { pathname } = useLocation();
 
     const [currentQuiz, setCurrentQuiz] = useState<any>({});
 
@@ -201,6 +200,7 @@ export default function QuizEditor() {
                 </table>
             </div>
             <hr />
+            
             <Link to={`/Kanbas/Courses/${cid}/Quizzes`}>
                 <button className="bottom-buttons float-end btn btn-danger" id="save-bt" onClick={handleSave}>Save</button>
             </Link>
