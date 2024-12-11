@@ -59,7 +59,7 @@ export default function QuizView() {
         <div id="quiz-details">
             <div id="quiz-view-buttons">
                 <button className="btn btn-light btn-outline-secondary btn-sm me-1 float-end" id="cancel-bt">Preview</button>
-                <Link to={`../Quizzes/Editor/${qid}`}
+                <Link to={`../Quizzes/Editor/Detail/${qid}`}
                     className="btn btn-light btn-outline-secondary btn-sm me-1 float-end" role="button">
                     <FaPencil className="position-relative me-2" /> Edit
                 </Link>
