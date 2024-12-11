@@ -11,7 +11,6 @@ import PeopleTable from './People/Table';
 
 import { useSelector } from "react-redux";
 import Quizzes from './Quizzes';
-import QuizEditor from './Quizzes/QuizEditor';
 import QuizView from "./Quizzes/QuizView";
 import Editors from './Quizzes/Editors';
 
@@ -45,7 +44,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Quizzes/Detail/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
                         <Route path="Quizzes/Questions/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
                         <Route path="Quizzes/Questions" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Details" element={<QuizView />} />
+                        <Route path="Detail" element={<QuizView />} />
                         <Route path="Question" element={ <></> /** <QuestionDetails/>} */ } />
                     </Routes>
                 </div>
