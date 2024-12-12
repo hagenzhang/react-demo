@@ -71,7 +71,7 @@ export default function QuizView() {
             {/* Quiz details */}
             <div id="quiz-details-content">
                 {/* <input className="padding" id="wd-name" defaultValue={quiz.name} /><br /><br /> */}
-                <div id="quiz-details-content-cols">
+                <div className="quiz-details-content-cols">
                     <div id="quiz-details-left">
                         <span className="quiz-detail-category">Quiz Type</span>
                         <span className="quiz-detail-category">Points</span>

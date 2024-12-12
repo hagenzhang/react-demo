@@ -90,169 +90,154 @@ export default function QuizEditor() {
         <div>
             <div id="wd-quiz-editor">
                 <form className="p-4">
+                    {/* Quiz name */}
                     <input type="text" className="padding form-control form-control-md"
                         id="wd-quiz-name" placeholder="Quiz Name" value={currentQuiz.title}
-                        onChange={(e) => setCurrentQuiz({ ...currentQuiz, title: e.target.value })} /> <br />
+                        onChange={(e) => setCurrentQuiz({ ...currentQuiz, title: e.target.value })} />
 
-                    <div className="mb-3">
-                        <textarea id="wd-quiz-description" cols={150} rows={3} value={currentQuiz.description}
-                            placeholder="Quiz Description"
-                            onChange={(e) => setCurrentQuiz({ ...currentQuiz, description: e.target.value })} />
-                    </div>
+                    {/* Quiz description */}
+                    <textarea id="wd-quiz-description" className="padding form-control form-control-md" cols={150} rows={3} value={currentQuiz.description}
+                        placeholder="Quiz Description"
+                        onChange={(e) => setCurrentQuiz({ ...currentQuiz, description: e.target.value })} />
 
-                    <table id="editor-table">
-                        <tr>
-                            <td align="right" valign="top">
-                                <label htmlFor="wd-group">Quiz Type</label>
-                            </td>
-                            <td>
-                                <select name="wd-group" className="padding" id="wd-group"
-                                    onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizType: e.target.value })}>
-                                    <option value="GRADED" selected>Graded Quiz</option>
-                                    <option value="PRACTICE">Practice Quiz</option>
-                                    <option value="GRADEDSURVEY">Graded Survey</option>
-                                    <option value="UNGRADEDSURVEY">Ungraded Survey</option>
-                                </select>
-                            </td>
-                        </tr><br />
-                        <tr>
-                            <td align="right" valign="top">
-                                <label htmlFor="wd-group">Assignment Group</label>
-                            </td>
-                            <td>
-                                <select name="wd-group" className="padding" id="wd-group"
-                                    onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizGroup: e.target.value })}>
-                                    <option value="QUIZZES" selected>Quizzes</option>
-                                    <option value="EXAMS">Exams</option>
-                                    <option value="ASSIGNMENTS">Assignments</option>
-                                    <option value="PROJECTS">Projects</option>
-                                </select>
-                            </td>
-                        </tr><br />
+                    {/* Form */}
+                    <div className="quiz-details-content-cols">
+                        <div id="quiz-editor-left">
+                            <span className="quiz-detail-category">Quiz Type</span>
+                            <span className="quiz-detail-category">Assignment Group</span>
+                            <br />
+                            <span className="quiz-detail-category" id="shift-assign">Assign</span>
+                        </div>
 
-                        {/* options */}
-                        <tr>
-                            <td align="right" valign="top">
-                                <label htmlFor="wd-options-to">Options</label>
-                            </td>
+                        <div id="quiz-editor-right">
+                            <select name="wd-group" id="wd-group" style={{ width: '200px' }}
+                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizType: e.target.value })}>
+                                <option value="GRADED" selected>Graded Quiz</option>
+                                <option value="PRACTICE">Practice Quiz</option>
+                                <option value="GRADEDSURVEY">Graded Survey</option>
+                                <option value="UNGRADEDSURVEY">Ungraded Survey</option>
+                            </select>
 
-                            <td style={{ border: '1px solid black', padding: '10px' }}>
+                            <select name="wd-group" style={{ width: '200px' }} id="wd-group"
+                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizGroup: e.target.value })}>
+                                <option value="QUIZZES" selected>Quizzes</option>
+                                <option value="EXAMS">Exams</option>
+                                <option value="ASSIGNMENTS">Assignments</option>
+                                <option value="PROJECTS">Projects</option>
+                            </select>
 
-                                <tr>
-                                    <td align="right" valign="top">
-                                        <label htmlFor="wd-shuffle-group">Shuffle Answers:</label>
-                                    </td>
-                                    <td>
-                                        <input type="radio" id="yes" name="wd-shuffle-group" checked={currentQuiz.shuffleAnswers}
-                                            onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: true })} />
-                                        <label htmlFor="yes">Yes</label>
+                            <div>
+                                <span className="quiz-detail-category" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Options</span>
+                                <td>
+                                    <tr>
+                                        <td align="right" valign="top">
+                                            <label htmlFor="wd-shuffle-group">Shuffle Answers:</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="yes" name="wd-shuffle-group" checked={currentQuiz.shuffleAnswers}
+                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: true })} />
+                                            <label htmlFor="yes">Yes </label>
 
-                                        <input type="radio" id="no" name="wd-shuffle-group" checked={!currentQuiz.shuffleAnswers}
-                                            onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: false })} />
-                                        <label htmlFor="no">No</label>
-                                    </td>
-                                </tr>
-                                <br />
+                                            <input type="radio" id="no" name="wd-shuffle-group" checked={!currentQuiz.shuffleAnswers}
+                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: false })} />
+                                            <label htmlFor="no">No</label>
+                                        </td>
+                                    </tr>
+                                    <br />
 
-                                <tr>
-                                    <td align="right" valign="top">
-                                        <label htmlFor="wd-one-group">One Question at a Time:</label>
-                                    </td>
-                                    <td>
-                                        <input type="radio" id="yes" name="wd-one-group" checked={currentQuiz.oneQuestionAtATime}
-                                            onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: true })} />
-                                        <label htmlFor="yes">Yes</label>
+                                    <tr>
+                                        <td align="right" valign="top">
+                                            <label htmlFor="wd-one-group">One Question at a Time:</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="yes" name="wd-one-group" checked={currentQuiz.oneQuestionAtATime}
+                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: true })} />
+                                            <label htmlFor="yes">Yes</label>
 
-                                        <input type="radio" id="no" name="wd-one-group" checked={!currentQuiz.oneQuestionAtATime}
-                                            onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: false })} />
-                                        <label htmlFor="no">No</label>
-                                    </td>
-                                </tr>
-                                <br />
+                                            <input type="radio" id="no" name="wd-one-group" checked={!currentQuiz.oneQuestionAtATime}
+                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: false })} />
+                                            <label htmlFor="no">No</label>
+                                        </td>
+                                    </tr>
+                                    <br />
 
-                                <tr>
-                                    <td align="right" valign="top">
-                                        <label htmlFor="wd-show-group">Show Solutions Post-Submission:</label>
-                                    </td>
-                                    <td>
-                                        <input type="radio" id="yes" name="wd-show-group" checked={currentQuiz.showCorrectAnswers}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: true })} />
-                                        <label htmlFor="yes">Yes</label>
+                                    <tr>
+                                        <td align="right" valign="top">
+                                            <label htmlFor="wd-show-group">Show Solutions Post-Submission:</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="yes" name="wd-show-group" checked={currentQuiz.showCorrectAnswers}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: true })} />
+                                            <label htmlFor="yes">Yes</label>
 
-                                        <input type="radio" id="no" name="wd-show-group" checked={!currentQuiz.showCorrectAnswers}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: false })} />
-                                        <label htmlFor="no">No</label>
-                                    </td>
-                                </tr>
-                                <br />
+                                            <input type="radio" id="no" name="wd-show-group" checked={!currentQuiz.showCorrectAnswers}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: false })} />
+                                            <label htmlFor="no">No</label>
+                                        </td>
+                                    </tr>
+                                    <br />
 
-                                <tr>
-                                    <td align="right" valign="top">
-                                        <label htmlFor="wd-web-group">Webcam Required:</label>
-                                    </td>
-                                    <td>
-                                        <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.webcamRequired}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: true })} />
-                                        <label htmlFor="yes">Yes</label>
+                                    <tr>
+                                        <td align="right" valign="top">
+                                            <label htmlFor="wd-web-group">Webcam Required:</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.webcamRequired}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: true })} />
+                                            <label htmlFor="yes">Yes</label>
 
-                                        <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.webcamRequired}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: false })} />
-                                        <label htmlFor="no">No</label>
-                                    </td>
-                                </tr>
-                                <br />
+                                            <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.webcamRequired}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: false })} />
+                                            <label htmlFor="no">No</label>
+                                        </td>
+                                    </tr>
+                                    <br />
 
-                                <tr>
-                                    <td align="right" valign="top">
-                                        <label htmlFor="wd-web-group">Lock Questions After Answering:</label>
-                                    </td>
-                                    <td>
-                                        <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.lockQuestionAfterAns}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: true })} />
-                                        <label htmlFor="yes">Yes</label>
+                                    <tr>
+                                        <td align="right" valign="top">
+                                            <label htmlFor="wd-web-group">Lock Questions After Answering:</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.lockQuestionAfterAns}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: true })} />
+                                            <label htmlFor="yes">Yes</label>
 
-                                        <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.lockQuestionAfterAns}
-                                            onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: false })} />
-                                        <label htmlFor="no">No</label>
-                                    </td>
-                                </tr>
-                                <br />
-                            </td>
-                        </tr>
-                        <br />
+                                            <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.lockQuestionAfterAns}
+                                                onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: false })} />
+                                            <label htmlFor="no">No</label>
+                                        </td>
+                                    </tr>
+                                </td>
+                            </div>
 
-                        <tr>
-                            <td align="right" valign="top">
-                                <label htmlFor="wd-assign-to">Assign</label>
-                            </td>
-                            <td style={{ border: '1px solid black', padding: '10px' }}>
+                            <td style={{ border: '1px solid gray', padding: '10px', borderRadius: '5px' }}>
                                 Due<br />
                                 <div className="input-group">
-                                    <input type="date" className="padding" />
-                                    <span className="input-group-text"></span>
-                                </div>
-                                <br /><br />
+                                    <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
+                                    {/* <span className="input-group-text"></span> */}
+                                </div><br />
                                 <table>
                                     <tr>
-                                        <td align="left">
+                                        <td align="left" style={{ marginRight: '10px' }}>
                                             Available from<br />
                                             <div className="input-group">
-                                                <input type="date" className="padding" />
-                                                <span className="input-group-text"></span>
+                                                <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
+                                                {/* <span className="input-group-text"></span> */}
                                             </div>
                                         </td>
+
                                         <td>
                                             Until<br />
                                             <div className="input-group">
-                                                <input type="date" className="padding" />
-                                                <span className="input-group-text"></span>
+                                                <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
+                                                {/* <span className="input-group-text"></span> */}
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
-                        </tr>
-                    </table>
+                        </div>
+                    </div>
                 </form>
             </div>
 

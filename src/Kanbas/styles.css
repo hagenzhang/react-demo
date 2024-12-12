@@ -38,6 +38,39 @@ body * {
   border-left: 3px solid green !important;
 }
 
+/* QUIZ EDITOR */
+#wd-quiz-editor form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#wd-quiz-editor .quiz-detail-category {
+  font-weight: normal;
+}
+
+#shift-assign {
+  margin-top: 215px;
+}
+
+#quiz-editor-left {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  gap: 34px;
+}
+
+#quiz-editor-right {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 20px;
+}
+
+#quiz-editor-right select {
+  padding: 7px;
+}
+
 
 
 /* QUIZ DETAILS */
@@ -55,7 +88,7 @@ body * {
   margin-top: 20px;
 }
 
-#quiz-details-content-cols {
+.quiz-details-content-cols {
   display: flex;
   flex-direction: row;
   justify-content: center;
