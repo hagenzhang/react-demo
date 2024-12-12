@@ -27,7 +27,6 @@ export default function Dashboard(
                                 onClick={addNewCourse}>
                                 Add
                             </button>
-
                             <button className="btn btn-warning float-end me-2"
                                 onClick={updateCourse} id="wd-update-course-click">
                                 Update
@@ -61,7 +60,7 @@ export default function Dashboard(
                                     {/* TODO: Maybe configure images here later? We could add in a folder for it 
                                     <img src="/images/reactjs.jpg" width="100%" height={160} alt='course' />
                                     */}
-                                    
+
                                     <div className="card-body">
                                         <h5 className="wd-dashboard-course-title card-title">
                                             {course.name} </h5>
