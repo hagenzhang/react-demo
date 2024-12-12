@@ -2,7 +2,7 @@ import { CiNoWaitingSign } from "react-icons/ci";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import QuizEditor from "./QuizEditor";
-import QuestionEditor from "./QuizQuestion/QuestionEditor";
+import QuestionEditor from "./QuizQuestion/QuizQuestionsEditor";
 
 export default function Editors() {
    const { cid, qid } = useParams();
