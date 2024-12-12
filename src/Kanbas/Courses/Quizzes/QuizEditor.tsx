@@ -1,259 +1,147 @@
-import { useState, useEffect } from "react";
-import { CiNoWaitingSign } from "react-icons/ci";
-import { useLocation, useParams } from "react-router";
-import * as client from "./client";
-import { Link } from "react-router-dom";
-
-/*
-This screen is going to show up for both editing an individual quiz
-and for creating a brand new quiz.
-
-TODO: creating a brand new quiz doesn't work
-TODO: add question creation / editing flow for this screen.
-TODO: formatting
-*/
-
-/*
-    {
-        DONE title: "Default Quiz",
-        DONE description: "A Very Default Description Here",
-        DONE course: "RS101",
-        DONE quizType: quizType.GRADED,
-        points: 100,
-        DONE assignmentGroup: quizGroup.QUIZZES,
-        DONE shuffleAnswers: true,
-        timeLimitMin: 20,
-        maxAttempts: 1, // no multiple attempts boolean, just set this value
-        showCorrectAnswers: true,
-        accessCode: "",
-        oneQuestionAtATime: true, // one question at a time
-        webcamRequired: false,
-        lockQuestionAfterAns: false,
-        dueDate: "2025-05-15T23:59",
-        availableDate: "2024-05-15T00:00",
-        closeDate: "2025-05-16T23:59", // until date equivalent
-        published: true,
-    },
-
-*/
-
-const defaultQuizOptions = {
-    shuffleAnswers: true,
-    showCorrectAnswers: true,
-    oneQuestionAtATime: true,
-    webcamRequired: false,
-    lockQuestionAfterAns: false,
-    published: false,
-}
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import GreenCheckmark from "../Modules/GreenCheckmark";
+import { FcCancel } from "react-icons/fc";
+import { IoEllipsisVertical } from "react-icons/io5";
+import QuizDetailsEditor from "./QuizDetailsEditor";
+import QuizQuestionsEditor from "./QuizQuestionsEditor/QuizQuestionsEditor";
+import mongoose from "mongoose";
+import { updateQuizzes } from "./reducer";
+import * as quizClient from "./client";
 
 export default function QuizEditor() {
-    const { cid, qid } = useParams();
-
-    const [currentQuiz, setCurrentQuiz] = useState<any>(defaultQuizOptions);
-
+    const { cid, qid, qtitle } = useParams();
+    const [activeTab, setActiveTab] = useState("details");
+    const { quizzes } = useSelector((state: any) => state.quizReducer);
+    const quiz = quizzes.find((quiz: any) => quiz._id === qid);
+    const [questions, setQuestions] = useState([]);
     const [totalPoints, setTotalPoints] = useState(0);
 
-    const isEdit = qid && true; // isEdit = true if qid is defined, else is false (new quiz)
+    const quizId = qid === "new" ? new mongoose.Types.ObjectId() : qid;
 
-    const handleSave = async () => {
-        if (isEdit) {
-            await client.updateQuiz(qid!, currentQuiz);
-            console.log("Quiz We Updated:", currentQuiz)            
+    const [newQuiz, setNewQuiz] = useState({
+        _id: quizId,
+        title: "New Quiz",
+        course: "",
+        quizType: "",
+        points: 100,
+        assignmentGroup: "",
+        shuffleAnswers: true,
+        timeLimit: 20,
+        multipleAttempts: false,
+        attemptsAllowed: 1,
+        showCorrectAnswers: "",
+        accessCode: "",
+        oneQuestionAtATime: true,
+        webcamRequired: false,
+        lockQuestionsAfterAnswering: true,
+        availableFromDate: "2024-11-01T00:00:00",
+        availableUntilDate: "2024-11-10T23:59:59",
+        due: "2024-11-10T23:59:59",
+        questions: [],
+        published: true,
+        ...quiz,
+    });
 
-        } else {
-            // ensure the course is set for a new quiz
-            setCurrentQuiz({ ...currentQuiz, course: cid })
-
-            console.log("New Quiz Object We Created:", currentQuiz)
-            await client.createQuiz(currentQuiz);
+    const fetchQuestionsAndCalculatePoints = async () => {
+        if (!qid || qid === "new") {
+            console.log("Skipping fetch for new quiz");
+            return;
         }
-    }
 
-    // Fetch quiz details if editing
+        try {
+            const fetchedQuestions = await quizClient.getQuizQuestions(qid);
+            setQuestions(fetchedQuestions);
+
+            const pointsSum = fetchedQuestions.reduce(
+                (sum: number, question: any) => sum + (question.points || 0),
+                0
+            );
+            setTotalPoints(pointsSum);
+            setNewQuiz((prevQuiz: any) => ({ ...prevQuiz, points: pointsSum }));
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        }
+    };
+
     useEffect(() => {
-        if (isEdit) {
-            console.log("We are editing a quiz, not creating a new one!")
-            try {
-                const setQuiz = async () => {
-                    const data: any = await client.getQuiz(qid!)
-                    setCurrentQuiz(data.data);
+        fetchQuestionsAndCalculatePoints();
+    }, [qid]);
 
-                    console.log("Details Fetched!")
-                    console.log("data: ", data.data)
-                };
-                setQuiz();
-            } catch (err) {
-                console.error(err);
-            }
-        } else {
-            console.log("We are creating a new quiz!")
-        }
-    }, [qid, isEdit]);
+    const dispatch = useDispatch();
+
+    const handleTabChange = (tab: any) => {
+        setActiveTab(tab);
+    };
+    useEffect(() => { }, [cid, qid]);
 
     return (
-        <div>
-            <div id="wd-quiz-editor">
-                <form className="p-4">
-                    {/* Quiz name */}
-                    <input type="text" className="padding form-control form-control-md"
-                        id="wd-quiz-name" placeholder="Quiz Name" value={currentQuiz.title}
-                        onChange={(e) => setCurrentQuiz({ ...currentQuiz, title: e.target.value })} />
-
-                    {/* Quiz description */}
-                    <textarea id="wd-quiz-description" className="padding form-control form-control-md" cols={150} rows={3} value={currentQuiz.description}
-                        placeholder="Quiz Description"
-                        onChange={(e) => setCurrentQuiz({ ...currentQuiz, description: e.target.value })} />
-
-                    {/* Form */}
-                    <div className="quiz-details-content-cols">
-                        <div id="quiz-editor-left">
-                            <span className="quiz-detail-category">Quiz Type</span>
-                            <span className="quiz-detail-category">Assignment Group</span>
-                            <br />
-                            <span className="quiz-detail-category" id="shift-assign">Assign</span>
-                        </div>
-
-                        <div id="quiz-editor-right">
-                            <select name="wd-group" id="wd-group" style={{ width: '200px' }}
-                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizType: e.target.value })}>
-                                <option value="GRADED" selected>Graded Quiz</option>
-                                <option value="PRACTICE">Practice Quiz</option>
-                                <option value="GRADEDSURVEY">Graded Survey</option>
-                                <option value="UNGRADEDSURVEY">Ungraded Survey</option>
-                            </select>
-
-                            <select name="wd-group" style={{ width: '200px' }} id="wd-group"
-                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, quizGroup: e.target.value })}>
-                                <option value="QUIZZES" selected>Quizzes</option>
-                                <option value="EXAMS">Exams</option>
-                                <option value="ASSIGNMENTS">Assignments</option>
-                                <option value="PROJECTS">Projects</option>
-                            </select>
-
-                            <div>
-                                <span className="quiz-detail-category" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Options</span>
-                                <td>
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <label htmlFor="wd-shuffle-group">Shuffle Answers:</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" id="yes" name="wd-shuffle-group" checked={currentQuiz.shuffleAnswers}
-                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: true })} />
-                                            <label htmlFor="yes">Yes </label>
-
-                                            <input type="radio" id="no" name="wd-shuffle-group" checked={!currentQuiz.shuffleAnswers}
-                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, shuffleAnswers: false })} />
-                                            <label htmlFor="no">No</label>
-                                        </td>
-                                    </tr>
-                                    <br />
-
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <label htmlFor="wd-one-group">One Question at a Time:</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" id="yes" name="wd-one-group" checked={currentQuiz.oneQuestionAtATime}
-                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: true })} />
-                                            <label htmlFor="yes">Yes</label>
-
-                                            <input type="radio" id="no" name="wd-one-group" checked={!currentQuiz.oneQuestionAtATime}
-                                                onChange={(e) => setCurrentQuiz({ ...currentQuiz, oneQuestionAtATime: false })} />
-                                            <label htmlFor="no">No</label>
-                                        </td>
-                                    </tr>
-                                    <br />
-
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <label htmlFor="wd-show-group">Show Solutions Post-Submission:</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" id="yes" name="wd-show-group" checked={currentQuiz.showCorrectAnswers}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: true })} />
-                                            <label htmlFor="yes">Yes</label>
-
-                                            <input type="radio" id="no" name="wd-show-group" checked={!currentQuiz.showCorrectAnswers}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, showCorrectAnswers: false })} />
-                                            <label htmlFor="no">No</label>
-                                        </td>
-                                    </tr>
-                                    <br />
-
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <label htmlFor="wd-web-group">Webcam Required:</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.webcamRequired}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: true })} />
-                                            <label htmlFor="yes">Yes</label>
-
-                                            <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.webcamRequired}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, webcamRequired: false })} />
-                                            <label htmlFor="no">No</label>
-                                        </td>
-                                    </tr>
-                                    <br />
-
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <label htmlFor="wd-web-group">Lock Questions After Answering:</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" id="yes" name="wd-web-group" checked={currentQuiz.lockQuestionAfterAns}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: true })} />
-                                            <label htmlFor="yes">Yes</label>
-
-                                            <input type="radio" id="no" name="wd-web-group" checked={!currentQuiz.lockQuestionAfterAns}
-                                                onChange={() => setCurrentQuiz({ ...currentQuiz, lockQuestionAfterAns: false })} />
-                                            <label htmlFor="no">No</label>
-                                        </td>
-                                    </tr>
-                                </td>
-                            </div>
-
-                            <td style={{ border: '1px solid gray', padding: '10px', borderRadius: '5px' }}>
-                                Due<br />
-                                <div className="input-group">
-                                    <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
-                                    {/* <span className="input-group-text"></span> */}
-                                </div><br />
-                                <table>
-                                    <tr>
-                                        <td align="left" style={{ marginRight: '10px' }}>
-                                            Available from<br />
-                                            <div className="input-group">
-                                                <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
-                                                {/* <span className="input-group-text"></span> */}
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            Until<br />
-                                            <div className="input-group">
-                                                <input type="date" style={{ padding: '5px', borderRadius: '5px' }} />
-                                                {/* <span className="input-group-text"></span> */}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <hr />
-
-            <Link to={`/Kanbas/Courses/${cid}/Quizzes`}>
-                <button className="bottom-buttons float-end btn btn-danger" id="save-bt" onClick={handleSave}>Save</button>
-            </Link>
-
-            <Link to={`/Kanbas/Courses/${cid}/Quizzes`} className={`list-group-item list-group-item-action text-danger border-0'`}>
-                <button className="bottom-buttons float-end btn btn-secondary" id="cancel-bt">Cancel</button>
-            </Link>
+        <div id="quiz-editor">
+            {((qid && qid !== "new") || (qtitle && qtitle !== "new")) && (
+                <>
+                    <span className="d-flex justify-content-end align-items-center">
+                        <b className="pe-3">Points {totalPoints}</b>{" "}
+                        <span className="pe-3">
+                            {newQuiz.published ? (
+                                <span
+                                    className="d-flex align-items-center justify-content-center"
+                                    onClick={async () => {
+                                        const updatedQuiz = { ...newQuiz, published: false };
+                                        await quizClient.updateQuiz(updatedQuiz._id, updatedQuiz);
+                                        setNewQuiz(updatedQuiz);
+                                        dispatch(updateQuizzes(updatedQuiz));
+                                    }}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <GreenCheckmark />
+                                    Published
+                                </span>
+                            ) : (
+                                <span
+                                    className="d-flex align-items-center justify-content-center"
+                                    onClick={async () => {
+                                        const updatedQuiz = { ...newQuiz, published: true };
+                                        await quizClient.updateQuiz(updatedQuiz._id, updatedQuiz);
+                                        setNewQuiz(updatedQuiz);
+                                        dispatch(updateQuizzes(updatedQuiz));
+                                    }}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <FcCancel className="fs-3" />
+                                    Unpublished
+                                </span>
+                            )}
+                        </span>
+                        <button className="btn btn-secondary btn-sm ms-1">
+                            <IoEllipsisVertical className="fs-4" />
+                        </button>
+                    </span>
+                    <hr />
+                </>
+            )}
+            <ul className="nav nav-tabs mb-4">
+                <li className="nav-item">
+                    <button
+                        className={`nav-link ${activeTab === "details" ? "active" : "inactive-tab"
+                            }`}
+                        onClick={() => handleTabChange("details")}
+                    >
+                        Details
+                    </button>
+                </li>
+                <li className="nav-item">
+                    <button
+                        className={`nav-link ${activeTab === "questions" ? "active" : "inactive-tab"
+                            }`}
+                        onClick={() => handleTabChange("questions")}
+                    >
+                        Questions
+                    </button>
+                </li>
+            </ul>
+            {activeTab === "details" && <QuizDetailsEditor q={newQuiz} />}
+            {activeTab === "questions" && <QuizQuestionsEditor quiz={newQuiz} />}
         </div>
     );
 }

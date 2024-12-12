@@ -4,6 +4,23 @@ const axiosWithCredentials = axios.create({ withCredentials: true });
 export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 
+export const findResponseForUser = async (userId: string, quizId: string) => {
+    const response = await axiosWithCredentials.get(
+        `${USERS_API}/${userId}/quizzes/${quizId}/grade`
+    );
+    return response.data;
+};
+
+export const createQuizResponse = async (userId: string, quizId: any, quizResponse: any) => {
+    const response = await axiosWithCredentials.post(
+        `${USERS_API}/${userId}/quizzes/${quizId}/grade`,
+        quizResponse
+    );
+    return response.data;
+};
+
+
+
 export const findAllUsers = async () => {
     const response = await axiosWithCredentials.get(USERS_API);
     return response.data;

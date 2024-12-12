@@ -1,7 +1,11 @@
+import { AiOutlinePlus } from 'react-icons/ai';
 import { FaMagnifyingGlass, FaPlus } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { IoEllipsisVertical } from 'react-icons/io5';
+import { Link, useParams } from 'react-router-dom';
 
 export default function QuizControls() {
+    const { cid } = useParams();
+
     return (
         <div id="wd-assignments-controls" className="text-nowrap">
             <div className="input-group mb-3 float-start" style={{ width: '60%' }} >
@@ -11,25 +15,18 @@ export default function QuizControls() {
                 <input type="text" placeholder="Search..." className="form-control" />
             </div>
 
-            <div className="wd-button float-end">
-                <Link to={"../Quizzes/Editor/Detail"}
-                    id="wd-add-assignment-btn"
-                    className="btn btn-lg btn-danger me-1 float-end"
-                    role="button"
+            <div className="col-md-6 text-end">
+                <a href={`#/Kanbas/Courses/${cid}/Quizzes/new/new`}>
+                    <button id="wd-add-assignment" className="btn btn-danger btn-lg">
+                        <AiOutlinePlus /> Quiz
+                    </button>
+                </a>
+                <button
+                    id="wd-add-assignment-group"
+                    className="btn btn-secondary btn-lg ms-1"
                 >
-                    <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                    Quiz
-                </Link>
-            </div>
-
-            <div className="wd-button float-end">
-                <Link to='#'
-                    id="wd-add-group-btn"
-                    className="btn btn-lg btn-secondary me-1 float-end"
-                >
-                    <FaPlus className="position-relative me-2" style={{ bottom: '1px' }} />
-                    Group
-                </Link>{' '}
+                    <IoEllipsisVertical className="fs-4" />
+                </button>
             </div>
         </div>
     );

@@ -12,17 +12,13 @@ import QuizMenu from './QuizMenu';
 
 /*
 Renders the "Main" screen for quizzes.
-
- - TODO: need to implement the triple dot dropdown menu and the published / unpublished logic.
-
- - if the user is a student, display their score if they took the exam.
-
 */
 
 // Formats the time strings into something human-readable
 function formatDate(dateString: string): string {
     return format(new Date(dateString), 'MM/dd/yyyy, hh:mm a');
 }
+
 // Checks if the quiz is still available based on the current date and the available / close date strings.
 function isQuizAvailable(availableDate: string, closeDate: string): string {
     const now = new Date();
@@ -111,8 +107,6 @@ export default function Quizzes() {
         }
     }
 
-
-
     return (
         <div id="wd-quizzes">
             {(currentUser.role === "FACULTY" || currentUser.role === "ADMIN")
@@ -140,7 +134,7 @@ export default function Quizzes() {
 
                             <div className="wd-quiz-info ps-3">
                                 <a className="wd-quiz-link text-decoration-none"
-                                    href={`#/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}>
+                                    href={`#/Kanbas/Courses/${cid}/Quizzes/${quiz._id}/Details`}>
                                     {quiz.title}
                                 </a>
 

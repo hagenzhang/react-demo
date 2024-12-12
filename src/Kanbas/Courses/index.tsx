@@ -10,9 +10,11 @@ import { FaAlignJustify } from 'react-icons/fa';
 import PeopleTable from './People/Table';
 
 import { useSelector } from "react-redux";
-import Quizzes from './Quizzes';
+import Quizzes from "./Quizzes";
+import QuizDetails from "./Quizzes/QuizDetails";
+import QuizEditor from "./Quizzes/QuizEditor";
 import QuizView from "./Quizzes/QuizView";
-import Editors from './Quizzes/Editors';
+import ResponseView from "./Quizzes/ResponseView";
 
 export default function Courses({ courses }: { courses: any[]; }) {
     const { cid } = useParams();
@@ -36,16 +38,17 @@ export default function Courses({ courses }: { courses: any[]; }) {
                         <Route path="Home" element={<Home />} />
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Assignments" element={<Assignments />} />
-                        <Route path="Assignments/:aid" element={ currentUser.role === "FACULTY" ? (<AssignmentEditor />) : "TODO"} />
+                        <Route path="Assignments/:aid" element={currentUser.role === "FACULTY" ? (<AssignmentEditor />) : "TODO"} />
                         <Route path="People" element={<PeopleTable />} />
                         <Route path="Quizzes" element={<Quizzes />} />
-                        <Route path="Quizzes/:qid" element={ currentUser.role === "FACULTY" ? (<QuizView />) : "TODO"} />
-                        <Route path="Quizzes/Editor/Detail" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Editor/Detail/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Editor/Questions/:qid" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Quizzes/Editor/Questions" element={ currentUser.role === "FACULTY" ? (<Editors />) : "TODO"} />
-                        <Route path="Detail" element={<QuizView />} />
-                        <Route path="Question" element={ <></> /** <QuestionDetails/>} */ } />
+                        <Route path="Quizzes/:qid/Details" element={<QuizDetails />} />
+                        <Route path="Quizzes/:qid/:qtitle" element={<QuizEditor />} />
+                        <Route path="Quizzes/:qid/Preview" element={<QuizView />} />
+                        <Route
+                            path="/Quizzes/:qid/Details/:responseId"
+                            element={<ResponseView />}
+                        />
+                        <Route path="Quizzes/:qid" element={<QuizView />} />
                     </Routes>
                 </div>
             </div>
