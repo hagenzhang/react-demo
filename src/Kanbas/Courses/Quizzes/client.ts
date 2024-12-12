@@ -20,7 +20,7 @@ export const findQuizzesForCourse = async (courseID: string) => {
 export const getQuiz = async (quizID: string) => {
     const response = await axiosWithCredentials
         .get(`${QUIZ_API}/${quizID}`)
-    return response
+    return response.data;
 };
 
 export const createQuiz = async (quiz: any) => {
@@ -44,9 +44,10 @@ export const updateQuiz = async (quizID: string, quiz: any) => {
 // ============================================================================
 
 export const getQuizQuestions = async (quizID: string) => {
-    const { data } = await axiosWithCredentials
-        .get(`${QUIZ_API}/:quizID/questions`);
-    return data
+    const response = await axiosWithCredentials
+        .get(`${QUIZ_API}/questions/${quizID}`);
+    console.log("getQuizQuestions Reponse: ", response.data)
+    return response.data
 }
 
 // assign a bunch of questions to a quiz
@@ -54,6 +55,6 @@ export const getQuizQuestions = async (quizID: string) => {
 // { questions: [ ... ] }
 export const updateQuizQuestions = async (quizID: string, questionsObj: any) => {
     const response = await axiosWithCredentials
-        .post(`${QUIZ_API}/:quizID/questions`, questionsObj);
+        .post(`${QUIZ_API}/${quizID}/questions`, questionsObj);
     return response.data;
 }

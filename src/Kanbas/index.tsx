@@ -19,8 +19,6 @@ export default function Kanbas() {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const [enrolling, setEnrolling] = useState<boolean>(false);
 
-
-
     const updateEnrollment = async (courseId: string, enrolled: boolean) => {
         if (enrolled) {
             await userClient.enrollIntoCourse(currentUser._id, courseId);

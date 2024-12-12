@@ -21,7 +21,11 @@ export default function AssignmentControlButtons({ assignmentID, deleteAssignmen
             <GreenCheckmark />
             <FaTrash className="text-danger"
                 onClick={() => handleDelete() ? deleteAssignment(assignmentID) : null} />
-            <IoEllipsisVertical className="fs-4" />
+                
+            <IoEllipsisVertical className="fs-4"
+                onClick={() => {
+
+                }}/>
         </div>
     );
 }

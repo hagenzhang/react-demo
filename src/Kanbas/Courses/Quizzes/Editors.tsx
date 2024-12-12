@@ -1,6 +1,5 @@
 import { CiNoWaitingSign } from "react-icons/ci";
 import { Link, useLocation, useParams } from "react-router-dom";
-import * as client from "./client";
 import { useState } from "react";
 import QuizEditor from "./QuizEditor";
 import QuestionEditor from "./QuizQuestion/QuestionEditor";

@@ -58,9 +58,13 @@ export default function QuizEditor() {
     const handleSave = async () => {
         if (isEdit) {
             await client.updateQuiz(qid!, currentQuiz);
+            console.log("Quiz We Updated:", currentQuiz)            
+
         } else {
             // ensure the course is set for a new quiz
             setCurrentQuiz({ ...currentQuiz, course: cid })
+
+            console.log("New Quiz Object We Created:", currentQuiz)
             await client.createQuiz(currentQuiz);
         }
     }
